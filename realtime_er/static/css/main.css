@@ -8,3 +8,11 @@
     padding: 0.5em;
     position: relative;
 }
+
+.iconStyle {
+    font-size:40px;
+    color:#B22222;
+    border: 3px solid #B22222;
+    padding: 8px;
+    margin: 7px;
+}
