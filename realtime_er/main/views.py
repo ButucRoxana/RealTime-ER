@@ -6,6 +6,7 @@ from realtime_er.models import User, Patient, PatientFile, Hospital, Code, Ambul
 from realtime_er import db
 from datetime import datetime
 
+
 @main.route('/')
 def index():
     # db.session.add(User(username='ambulance',
@@ -27,6 +28,27 @@ def index():
     #                     waiting_time=90))
     # db.session.add(Code(color=4,
     #                     waiting_time=100))
-    db.session.commit()
+    # db.session.commit()
     return render_template('index.html')
+
+
+@main.route('desprenoi')
+def despre_noi():
+    return render_template('desprenoi.html')
+
+
+@main.route('medici')
+def medici():
+    return render_template('medici.html')
+
+
+@main.route('spitalepartenere')
+def spitale_partenere():
+    return render_template('spitalepartenere.html')
+
+
+@main.route('contact')
+def contact():
+    return render_template('contact.html')
+
 

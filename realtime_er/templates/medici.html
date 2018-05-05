@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+Despre Noi
+{%  endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-xs-6">
+            <h1 style="color:#B22222"><i class="fa fa-heartbeat" style="color:#B22222;padding: 8px;margin: 7px;"></i>RealTime-ER</h1>
+        </div>
+    </div>
+    <div>
+        <img src="{{ url_for('static', filename='images/med.jpg') }}" style="width: 85%; height: 25em;">
+    </div>
+    <div class="row" style="margin:20px">
+        <div class="col-md-2 col-xs-2"></div>
+        <div class="col-md-8 col-xs-8"></div>
+        <div class="col-md-2 col-xs-2">
+            <i class="fa fa-ambulance iconStyle" style="color:#B22222;padding: 8px;margin: 7px;"></i><u style="color:#1E90FF; font-weight: bold; font-size: 20px">021 9298</u>
+        </div>
+    </div>
+</div>
+
+{{ moment.include_jquery() }}
+{{ moment.include_moment() }}
+{%  endblock %}

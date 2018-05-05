@@ -16,3 +16,19 @@
     padding: 8px;
     margin: 7px;
 }
+
+.liStyle li:before {
+    content:'|';
+    color: #B22222;
+}
+
+.liStyle li {
+    display:inline-block;
+    font-size:25px;
+}
+
+.liStyle li a {
+    color: #B22222;
+    text-decoration: underline;
+    text-decoration-color: #B22222;
+}
