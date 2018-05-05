@@ -1,0 +1,10 @@
+.mainBody {
+    background-color: white;
+    margin: auto;
+    width: 74%;
+    max-width: 1200px;
+    min-width: 444px;
+    border: 1px solid #ccc;
+    padding: 0.5em;
+    position: relative;
+}

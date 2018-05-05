@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+RealTime-ER
+{%  endblock %}
+
+{% block content %}
+  <div class="mainBody">
+    <nav>
+        <ul>
+            <li><a href="#"><i class="fa fa-user" style="font-size:40px;color:#B22222;border: 3px solid #B22222;padding: 8px;"></i>Autentificare</a></li>
+            <li><a href="#">Inregistrare</a></li>
+        </ul>
+    </nav>
+</div>
+
+{{ moment.include_jquery() }}
+{{ moment.include_moment() }}
+{%  endblock %}
