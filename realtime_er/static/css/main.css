@@ -32,3 +32,11 @@
     text-decoration: underline;
     text-decoration-color: #B22222;
 }
+
+.docs {
+    color:#1E90FF;
+    texzt-align: center;
+    text-decoration: underline;
+    font-weight: bold;
+    margin-bottom: 3em;
+}

@@ -5,6 +5,7 @@ from .. import login_manager
 from realtime_er.models import User, Patient, PatientFile, Hospital, Code, Ambulance, Doctor, Er
 from realtime_er import db
 from datetime import datetime
+from .forms import ContactForm
 
 
 @main.route('/')
@@ -42,13 +43,19 @@ def medici():
     return render_template('medici.html')
 
 
+@main.route('medici/specializare')
+def specializare():
+    return render_template('specializare.html')
+
+
 @main.route('spitalepartenere')
 def spitale_partenere():
     return render_template('spitalepartenere.html')
 
 
-@main.route('contact')
+@main.route('contact', methods=["GET", "POST"])
 def contact():
-    return render_template('contact.html')
+    form = ContactForm()
+    return render_template('contact.html', form=form)
 
 

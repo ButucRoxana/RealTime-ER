@@ -5,15 +5,52 @@ Despre Noi
 {%  endblock %}
 
 {% block content %}
-
 <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('main.index') }}"><i class="fa fa-home iconStyle"></i>Pagina principala</a>
+            </li>
+        </ul>
+
+      </div>
+    </nav>
     <div class="row">
         <div class="col-md-6 col-xs-6">
             <h1 style="color:#B22222"><i class="fa fa-heartbeat" style="color:#B22222;padding: 8px;margin: 7px;"></i>RealTime-ER</h1>
         </div>
     </div>
-    <div>
-        <img src="{{ url_for('static', filename='images/med.jpg') }}" style="width: 85%; height: 25em;">
+    <div class="row" style="margin:30px">
+        <h1 style="color:#1E90FF; font-weight: bold; font-size: 40px">Despre noi</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-7 col-xs-7">
+            <p style="text-indent: 50px;text-align: justify;color:#1E90FF; font-weight:bold">	Sistemul vine in ajutorul persoanelor care se afla in situatia neplacuta de a merge la camera de garda si care sunt nevoite sa astepte foarte mult timp pana sa fie preluate de catre un doctor specialist. In vederea atingerii acestui scop se estimeaza un timp de asteptare pentru fiecare unitate de primire a urgentelor ale spitalelor din sistem. Pe baza acestor informatii utilizatorul poate sa decida care spital ii poate pune la dispozitie serviciile medicale intr-un timp minim.</p>
+            <p style="text-indent: 50px;text-align: justify;color:#1E90FF; font-weight:bold">Aplicatia RealTime-ER isi propune sa obtina trei seturi diferite de date pe baza carora sa prioritizeze cazurile medicale: date introduse de catre utilizator, date preluate din ambulanta, date preluate in incinta camerei de garda.</p>
+            <p style="text-indent: 50px;text-align: justify;color:#1E90FF; font-weight:bold">Datele introduse de catre utilizator sunt furnizate aplicatiei in momentul in care o persoana cu probleme medicale ce nu necesita transportul imediat cu o ambulata. Aceste date se refera la datele de identificare a pacientului, locatia acestuia, problema medicala pe care o are precum si alte detalii referitoare la manifestarea afectiunii in decursul ultimelor ore.</p>
+        </div>
+        <div class="col-md-3 col-xs-3">
+            <div class="row">
+                <img src="{{ url_for('static', filename='images/health.jpg') }}" style="width: 85%;height: 10em">
+            </div>
+            <div class="row">
+                <img src="{{ url_for('static', filename='images/hearth.jpg') }}" style="width: 85%;">
+            </div>
+        </div>
+        <div class="col-md-2 col-xs-2">
+            <div class="row">
+                <img src="{{ url_for('static', filename='images/pc.png') }}" style="width: 85%;">
+            </div>
+            <div class="row">
+                <img src="{{ url_for('static', filename='images/media.png') }}" style="width: 85%; height: 12em;">
+            </div>
+        </div>
     </div>
     <div class="row" style="margin:20px">
         <div class="col-md-2 col-xs-2"></div>
