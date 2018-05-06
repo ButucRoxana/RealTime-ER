@@ -34,9 +34,16 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    def check_cont_type(self, type, username):
+        new_user = User.query.filter_by(username=username).first()
+        return new_user.type == type
+
     @staticmethod
     def get_by_username(username):
         return User.query.filter_by(username=username).first()
+
+    def get_id(self):
+        return self.user_id
 
     def __repr__(self):
         return "<User '{}'>".format(self.username)

@@ -1,11 +1,12 @@
-from flask import render_template
+from flask import render_template, flash, redirect, url_for
+from flask_login import login_user, logout_user
 
 from . import main
 from .. import login_manager
 from realtime_er.models import User, Patient, PatientFile, Hospital, Code, Ambulance, Doctor, Er
 from realtime_er import db
 from datetime import datetime
-from .forms import ContactForm
+from .forms import ContactForm, AutentificareForm, RecuperareContForm
 
 
 @main.route('/')
@@ -59,3 +60,52 @@ def contact():
     return render_template('contact.html', form=form)
 
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+tipuri_cont = {
+    "Medic": 1,
+    "Ambulanta": 2,
+    "Pacient": 0,
+    "ER": 3
+}
+
+
+@main.route('autentificare', methods=["GET", "POST"])
+def autentificare():
+    form = AutentificareForm()
+    if form.forgot_password.data:
+        recuperare_cont_form = RecuperareContForm()
+        return render_template('recuperare_cont.html', form=recuperare_cont_form)
+    if form.validate_on_submit():
+        if form.intra_in_cont.data:
+            user = User.get_by_username(form.nume.data)
+            type = tipuri_cont[form.tip_cont.data]
+            if user is not None and user.check_password(form.parola.data) and user.check_cont_type(type, form.nume.data):
+                login_user(user, form.remember_me.data)
+                if user.doctor:
+                    return render_template('user_doctor.html', user=user)
+                elif user.er:
+                    flash("ER")
+                    pass
+                elif user.ambulance:
+                    flash("AMBULANCE")
+                    pass
+                elif user.patient:
+                    flash("PATIENT")
+                    pass
+                flash("Autentifcare reusita pentru utilizatorul: {}.".format(user.username))
+            else:
+                flash("Date incorecte")
+        # elif form.forgot_password.data:
+        #     recuperare_cont_form = RecuperareContForm()
+        #     return render_template('recuperare_cont.html', form=recuperare_cont_form)
+    return render_template('autentificare.html', form=form)
+
+
+@main.route("deconectare")
+def deconectare():
+    logout_user()
+    return render_template("index.html")

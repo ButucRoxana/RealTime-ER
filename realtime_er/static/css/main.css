@@ -40,3 +40,31 @@
     font-weight: bold;
     margin-bottom: 3em;
 }
+
+
+.flashes ul {
+    margin: 0 0;
+    background: #FFD6A3;
+    color: #000;
+
+    list-style-type: none;
+    list-style: none;
+}
+
+/* flashes styling */
+
+.flashes ul{
+    background: #FFD6A3;
+    color: #000;
+}
+
+article.flashes {
+    margin-bottom: 1em;
+}
+
+/* fix form layout with flashes */
+section {
+    clear: left;
+}
+
+.intra_in_cont {display: inline;}
