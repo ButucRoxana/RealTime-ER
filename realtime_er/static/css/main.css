@@ -68,3 +68,56 @@ section {
 }
 
 .intra_in_cont {display: inline;}
+
+
+/*Ambulance classes*/
+.iconStyleTablet {
+    font-size:25px;
+    color:#B22222;
+    padding: 5px;
+    margin: 5px;
+}
+.imageCenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    height: 25em;
+}
+.centerBlock {
+    display: table;
+    margin: auto;
+}
+.backImage {
+    object-fit: contain;
+    opacity: 0.5;
+    z-index: -1;
+    position: absolute;
+}
+.buttonColor {
+    background-color: #B22222;
+    border-style: solid;
+    border-color: #B22222;
+    border-radius: 5px;
+    color: white;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    content: 'Salveaza';
+}
+label[for="salveaza"] {
+    display: none;
+}
+label[for="transfera"] {
+    display: none;
+}
+label[for="register"] {
+    display: none;
+}
+.saveIcon {
+    content: '\f0c7';
+    font-family: 'FontAwesome';
+    padding-left: 5px;
+    padding-right: 5px;
+}
+

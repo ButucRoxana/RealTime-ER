@@ -7,6 +7,7 @@ from realtime_er.models import User, Patient, PatientFile, Hospital, Code, Ambul
 from realtime_er import db
 from datetime import datetime
 from .forms import ContactForm, AutentificareForm, RecuperareContForm
+from .forms import ContactForm, AmbulanceForgotPassForm, AmbulanceTransferPacients, AmbulanceRegisterPacient
 
 
 @main.route('/')
@@ -64,6 +65,28 @@ def contact():
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+@main.route('ambulanceHome', methods=["GET", "POST"])
+def ambulance_home():
+    return render_template('ambulanceHome.html')
+
+
+@main.route('ambulanceChangePass', methods=["GET", "POST"])
+def ambulance_change_pass():
+    form = AmbulanceForgotPassForm()
+    return render_template('ambulanceChangePass.html', form=form)
+
+
+@main.route('ambulancePatientList', methods=["GET", "POST"])
+def ambulance_patient_list():
+    form = AmbulanceTransferPacients()
+    return render_template('ambulancePatientList.html', form=form)
+
+
+@main.route('ambulanceRegisterPatient', methods=["GET", "POST"])
+def ambulance_register_patient():
+    form = AmbulanceRegisterPacient()
+    # this has to be replaced with the right page
+    return render_template('ambulanceHome.html', form=form)
 
 tipuri_cont = {
     "Medic": 1,

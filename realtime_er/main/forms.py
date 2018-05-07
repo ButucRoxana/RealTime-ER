@@ -26,3 +26,18 @@ class RecuperareContForm(Form):
     telefon = StringField('Telefon')
     email = StringField('E-mail ',validators=[DataRequired(), Length(1, 120), Email()])
     trimite_cont = SubmitField("Timite cont")
+
+
+class AmbulanceForgotPassForm(Form):
+    oldPassword = StringField('Old Password ', validators=[DataRequired()])
+    newPassword = StringField('New Password ', validators=[DataRequired()])
+    repeatNewPassword = StringField('Repeat New Password ', validators=[DataRequired()])
+    salveaza = SubmitField('Salveaza')
+
+
+class AmbulanceTransferPacients(Form):
+    transfera = SubmitField('Transfera pacienti')
+
+
+class AmbulanceRegisterPacient(Form):
+    register = SubmitField('Inregistreaza pacient')
