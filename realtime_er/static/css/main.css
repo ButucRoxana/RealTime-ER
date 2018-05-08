@@ -67,8 +67,22 @@ section {
     clear: left;
 }
 
-.intra_in_cont {display: inline;}
-
+.intra_in_cont {
+    display: inline;
+    background-color: #B22222;
+    border-style: solid;
+    border-color: #B22222;
+    border-radius: 5px;
+    color: white;
+}
+.forgot_password{
+    display: inline;
+    background-color: #B22222;
+    border-style: solid;
+    border-color: #B22222;
+    border-radius: 5px;
+    color: white;
+}
 
 /*Ambulance classes*/
 .iconStyleTablet {
@@ -112,6 +126,12 @@ label[for="transfera"] {
     display: none;
 }
 label[for="register"] {
+    display: none;
+}
+label[for="forgot_password"] {
+    display: none;
+}
+label[for="intra_in_cont"] {
     display: none;
 }
 .saveIcon {

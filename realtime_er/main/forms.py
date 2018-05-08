@@ -35,9 +35,11 @@ class AmbulanceForgotPassForm(Form):
     salveaza = SubmitField('Salveaza')
 
 
-class AmbulanceTransferPacients(Form):
-    transfera = SubmitField('Transfera pacienti')
-
-
 class AmbulanceRegisterPacient(Form):
     register = SubmitField('Inregistreaza pacient')
+
+
+class AmbulancePacients(Form):
+    pacient = StringField('', validators=[DataRequired()])
+    search = SubmitField('Cauta pacient')
+    transfera = SubmitField('Transfera pacienti')

@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, url_for
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user, login_required
 
 from . import main
 from .. import login_manager
@@ -7,7 +7,7 @@ from realtime_er.models import User, Patient, PatientFile, Hospital, Code, Ambul
 from realtime_er import db
 from datetime import datetime
 from .forms import ContactForm, AutentificareForm, RecuperareContForm
-from .forms import ContactForm, AmbulanceForgotPassForm, AmbulanceTransferPacients, AmbulanceRegisterPacient
+from .forms import ContactForm, AmbulanceForgotPassForm, AmbulancePacients, AmbulanceRegisterPacient
 
 
 @main.route('/')
@@ -65,6 +65,7 @@ def contact():
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+
 @main.route('ambulanceHome', methods=["GET", "POST"])
 def ambulance_home():
     return render_template('ambulanceHome.html')
@@ -73,12 +74,31 @@ def ambulance_home():
 @main.route('ambulanceChangePass', methods=["GET", "POST"])
 def ambulance_change_pass():
     form = AmbulanceForgotPassForm()
+    if form.validate_on_submit():
+        if form.salveaza.data:
+            # Find user - it's current_user
+            user = User.query.filter_by(user_id=current_user.user_id).first()
+            if User.check_password(user, form.oldPassword.data):
+                print 'OK'
+                if form.newPassword.data == form.repeatNewPassword.data:
+                    # Set the new password
+                    user.password = form.newPassword.data
+                    db.session.commit()
+                    # Redirect to the login page for the user to login with the new password
+                    logout_user()
+                    return redirect(url_for('main.autentificare'))
+                else:
+                    flash("Parola nu coincide cu cea de mai sus!")
+            else:
+                flash("Parola veche nu coincide cu cea a user-ului!")
+
     return render_template('ambulanceChangePass.html', form=form)
 
 
 @main.route('ambulancePatientList', methods=["GET", "POST"])
 def ambulance_patient_list():
-    form = AmbulanceTransferPacients()
+    form = AmbulancePacients()
+
     return render_template('ambulancePatientList.html', form=form)
 
 
@@ -99,24 +119,48 @@ tipuri_cont = {
 @main.route('autentificare', methods=["GET", "POST"])
 def autentificare():
     form = AutentificareForm()
+    print 'here'
     if form.forgot_password.data:
+        print 'here2'
         recuperare_cont_form = RecuperareContForm()
         return render_template('recuperare_cont.html', form=recuperare_cont_form)
+    print 'here3'
     if form.validate_on_submit():
+        print 'here4'
         if form.intra_in_cont.data:
+            print 'here5'
             user = User.get_by_username(form.nume.data)
             type = tipuri_cont[form.tip_cont.data]
+            print user.check_cont_type(type, form.nume.data)
             if user is not None and user.check_password(form.parola.data) and user.check_cont_type(type, form.nume.data):
                 login_user(user, form.remember_me.data)
-                if user.doctor:
-                    return render_template('user_doctor.html', user=user)
-                elif user.er:
+                #print user
+                #print user.doctor
+                #print user.ambulance
+                #print user.type
+
+                #if user.doctor:
+                #    return render_template('user_doctor.html', user=user)
+                #elif user.er:
+                #    flash("ER")
+                #    pass
+                #elif user.ambulance:
+                #    flash("AMBULANCE")
+                #    return render_template('ambulanceHome.html', user=user)
+                #    pass
+                #elif user.patient:
+                #    flash("PATIENT")
+                #    pass
+                if user.type == 1:
+                    return redirect(url_for('main.user_doctor', user=user))
+                elif user.type == 3:
                     flash("ER")
                     pass
-                elif user.ambulance:
+                elif user.type == 2:
                     flash("AMBULANCE")
+                    return redirect(url_for('main.ambulance_home'))
                     pass
-                elif user.patient:
+                elif user.patient == 0:
                     flash("PATIENT")
                     pass
                 flash("Autentifcare reusita pentru utilizatorul: {}.".format(user.username))
@@ -132,3 +176,9 @@ def autentificare():
 def deconectare():
     logout_user()
     return render_template("index.html")
+
+
+@main.route("user_doctor")
+def user_doctor():
+    user = User.get_by_username(current_user.username)
+    return render_template("user_doctor.html", user=user)
