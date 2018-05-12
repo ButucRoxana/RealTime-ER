@@ -6,8 +6,8 @@ from .. import login_manager
 from realtime_er.models import User, Patient, PatientFile, Hospital, Code, Ambulance, Doctor, Er
 from realtime_er import db
 from datetime import datetime
-from .forms import ContactForm, AutentificareForm, RecuperareContForm
-from .forms import ContactForm, AmbulanceForgotPassForm, AmbulancePacients, AmbulanceRegisterPacient
+from .forms import AutentificareForm, RecuperareContForm
+from .forms import ContactForm, AmbulanceForgotPassForm, AmbulancePacients, AmbulanceRegisterPacient, SchimbaParola
 
 
 @main.route('/')
@@ -172,12 +172,23 @@ def deconectare():
     return render_template("index.html")
 
 
-@main.route("user_doctor")
+@main.route("user_doctor", methods=["GET", "POST"])
 def user_doctor():
     user = User.get_by_username(current_user.username)
-    return render_template("user_doctor.html", user=user)
+    return render_template("doctorHome.html", user=user)
 
-@main.route("recuperare_cont")
+@main.route("recuperare_cont", methods=["GET", "POST"])
 def recuperare_cont():
-    recuperare_cont_form = RecuperareContForm()
-    return render_template("recuperare_cont.html", form=recuperare_cont_form)
+    form = RecuperareContForm()
+    if form.trimite_cod.data:
+        if form.email.data:
+            trimis_la = "la adresa de e-mail indicata"
+        else:
+            trimis_la = "la numarul de telefon indicat"
+        flash("Codul a fost trimis {}.".format(trimis_la))
+    return render_template("recuperare_cont.html", form=form)
+
+@main.route("schimba_parola", methods=["GET", "POST"])
+def schimba_parola():
+    form = SchimbaParola()
+    return render_template("schimba_parola.html", form=form)

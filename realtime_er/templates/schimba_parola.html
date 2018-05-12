@@ -28,35 +28,23 @@ Autentificare
         </div>
     </div>
     <div class="row" style="margin:30px">
-        <h1 style="color:#1E90FF; font-weight: bold; font-size: 40px">Recuperare cont</h1>
+        <h1 style="color:#1E90FF; font-weight: bold; font-size: 40px">Schimba parola</h1>
     </div>
-    <div class="row"></div>
     <div class="row">
-        <p style="text-indent: 50px;text-align: justify;color:#1E90FF; font-weight:bold; margin: 55px 0 45px 0; padding: auto" >Alege modalitatea de resetare a contului: </p>
-    </div>
 
+    </div>
     <div class="row">
         <div class="col-md-7 col-xs-7">
             <section>
                 <form action="" method="post">
                     {{form.hidden_tag()}}
                     <table>
-                        {{ render_field(form.telefon, size=50) }}
-                    </table>
-                    <div class="row">
-                        <p style="text-indent: 236px;text-align: justify;color:#1E90FF; font-weight:bold; margin: 20px 0 20px 0; padding: auto" >sau </p>
-                     </div>
-                    <table>
-                        {{ render_field(form.email, size=50) }}
-                    </table>
-                    <div class="row">
-                        <p style="color: crimson; padding-left: 14px">*Utilizeaza numarul de telefon sau adresa de e-mail folosite pentru inregistrare </p>
-                    </div>
-                    <table>
-                        {{ render_field(form.trimite_cod, class="trimite_cod") }}
+                        {{ render_field(form.parola_veche, size=50) }}
+                        {{ render_field(form.parola_noua, size=50) }}
+                        {{ render_field(form.reintroduceti_parola, size=50) }}
+                        {{ render_field(form.salveaza, class="salveaza") }}
                     </table>
                 </form>
-
             </section>
         </div>
         <div class="col-md-2 col-xs-2"></div>
@@ -65,7 +53,7 @@ Autentificare
         </div>
     </div>
 
-     <div class="for messages">
+    <div class="for messages">
         <div class="main wrapper clearfix">
             <article class="flashes">
                 {% with messages = get_flashed_messages() %}

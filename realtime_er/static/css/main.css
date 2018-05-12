@@ -84,7 +84,15 @@ section {
     border-radius: 5px;
     color: white;
 }
-.trimite_cod{
+.trimite_cod {
+    display: inline;
+    background-color: #B22222;
+    border-style: solid;
+    border-color: #B22222;
+    border-radius: 5px;
+    color: white;
+}
+.salveaza{
     display: inline;
     background-color: #B22222;
     border-style: solid;
