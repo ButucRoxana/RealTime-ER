@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% from "form_macros.html" import render_field %}
+
+{% block title %}
+Inregistrare Pacient
+{%  endblock %}
+
+{% block content %}
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('main.index') }}"><i class="fa fa-home iconStyle"></i>Pagina principala</a>
+            </li>
+        </ul>
+
+      </div>
+    </nav>
+    <div class="row">
+        <div class="col-md-6 col-xs-6">
+            <h1 style="color:#B22222"><i class="fa fa-heartbeat" style="color:#B22222;padding: 8px;margin: 7px;"></i>RealTime-ER</h1>
+        </div>
+    </div>
+    <div class="row" style="margin:30px">
+        <h1 style="color:#1E90FF; font-weight: bold; font-size: 40px">Contact</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-7 col-xs-7">
+            <p style="text-indent: 50px;text-align: justify;color:#1E90FF; font-weight:bold">Ne bucuram sa va raspundem la intrebarile pe care le aveti. Trimiteti un mesaj prin completarea formularului de mai jos si va vom raspunde in cel mai scurt timp posibil.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-7 col-xs-7">
+            <section>
+                <form action="" method="post">
+                    {{form.hidden_tag()}}
+                    <table>
+                        {{ render_field(form.nume, size=50) }}
+                        {{ render_field(form.email, size=50) }}
+                        {{ render_field(form.subiect, size=50) }}
+                        {{ render_field(form.mesaj, rows='3',cols='50') }}
+                        {{ render_field(form.trimite) }}
+                    </table>
+                </form>
+            </section>
+        </div>
+        <div class="col-md-2 col-xs-2"></div>
+        <div class="col-md-3 col-xs-3" style="float:right">
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="color:#1E90FF; font-weight:bold;">Email <br> <span style="color: black;text-decoration: underline; font-weight:bold">realtime-er@gmail.com </span><br><br></td>
+                    </tr>
+                    <tr>
+                        <td style="color:#1E90FF; font-weight:bold;">Telefon <br> <span style="color: black;text-decoration: underline; font-weight:bold">0756854123 </span><br><br> </td>
+                    </tr>
+                    <tr>
+                        <td style="color:#1E90FF; font-weight:bold;">Web <br>
+                            <i class="fa fa-facebook-f" style="color:#4682B4;padding: 8px;margin: 7px;"> </i>
+                            <i class="fa fa-instagram" style="color:#FF8C00;padding: 8px;margin: 7px;"> </i>
+                            <i class="fa fa-twitter" style="color:#1E90FF;padding: 8px;margin: 7px;"> </i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}render_field
