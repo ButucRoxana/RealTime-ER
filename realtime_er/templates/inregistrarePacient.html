@@ -38,16 +38,37 @@ Inregistrare Pacient
     <div class="row">
         <div class="col-md-7 col-xs-7">
             <section>
-{#                <form action="" method="post">#}
-{#                    {{form.hidden_tag()}}#}
-{#                    <table>#}
-{#                        {{ render_field(form.nume, size=50) }}#}
-{#                        {{ render_field(form.email, size=50) }}#}
-{#                        {{ render_field(form.subiect, size=50) }}#}
-{#                        {{ render_field(form.mesaj, rows='3',cols='50') }}#}
-{#                        {{ render_field(form.trimite) }}#}
-{#                    </table>#}
-{#                </form>#}
+                 nume = StringField('Nume ', validators=[DataRequired()])
+    datanasterii = DateTimeField('Data nasterii ', validators=[DataRequired()])
+    cnp = StringField('CNP ', validators=[DataRequired()])
+    adresa = StringField('Adresa ',  validators=[Length(max=200)])
+    telefon = StringField('Telefon ', validators=[Length(max=10)])
+    email = StringField('Email ',  validators=[DataRequired(), Length(1, 120), Email()])
+    genders = [(x, x) for x in ["Feminin", "Masculin"]]
+    sex = RadioField('Sex', choices=genders)
+    coduri = ["Rosu", "Galben", "Verde", 'Albastru', "Alb"]
+    cod_urgenta = SelectField('Cod urgenta ', choices=coduri, validators=[DataRequired()])
+    observatii = TextAreaField('Observatii ',  validators=[Length(max=500)])
+    tratament = TextAreaField('Tratament ',  validators=[Length(max=500)])
+    adauga = SubmitField('Adauga ')
+                <form action="" method="post">
+                    {{form.hidden_tag()}}
+                    <table>
+                        {{ render_field(form.nume, size=50) }}
+                        {{ render_field(form.datanasterii, size=50) }}
+                        {{ render_field(form.cnp, size=50) }}
+                        {{ render_field(form.adresa, size=50) }}
+                        {{ render_field(form.telefon, size=50) }}
+                        {{ render_field(form.email, size=50) }}
+                        {{ render_field(form.sex) }}
+                    </table>
+                    <table>
+                        {{ render_field(form.cod_urgenta, size=50) }}
+                        {{ render_field(form.observatii, rows='3',cols='50') }}
+                        {{ render_field(form.tratamemt, rows='3',cols='50') }}
+                        {{ render_field(form.adauga) }}
+                    </table>
+                </form>
             </section>
         </div>
         <div class="col-md-2 col-xs-2"></div>

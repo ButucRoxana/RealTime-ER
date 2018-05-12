@@ -7,7 +7,7 @@ from realtime_er.models import User, Patient, PatientFile, Hospital, Code, Ambul
 from realtime_er import db
 from datetime import datetime
 from .forms import AutentificareForm, RecuperareContForm
-from .forms import ContactForm, AmbulanceForgotPassForm, AmbulancePacients, AmbulanceRegisterPacient, SchimbaParola
+from .forms import ContactForm, AmbulanceForgotPassForm, AmbulancePacients, AmbulanceRegisterPacient, SchimbaParola, PatientFileForm
 
 
 @main.route('/')
@@ -78,7 +78,8 @@ def inregistrare_pacient():
 
 @main.route('er', methods=["GET", "POST"])
 def erHome():
-    return render_template('erHome.html', user=current_user)
+    form = PatientFileForm()
+    return render_template('erHome.html', user=current_user, form=form)
 
 
 @main.route('mobileHome', methods=["GET", "POST"])
