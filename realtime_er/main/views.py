@@ -134,23 +134,6 @@ def autentificare():
             print user.check_cont_type(type, form.nume.data)
             if user is not None and user.check_password(form.parola.data) and user.check_cont_type(type, form.nume.data):
                 login_user(user, form.remember_me.data)
-                #print user
-                #print user.doctor
-                #print user.ambulance
-                #print user.type
-
-                #if user.doctor:
-                #    return render_template('user_doctor.html', user=user)
-                #elif user.er:
-                #    flash("ER")
-                #    pass
-                #elif user.ambulance:
-                #    flash("AMBULANCE")
-                #    return render_template('ambulanceHome.html', user=user)
-                #    pass
-                #elif user.patient:
-                #    flash("PATIENT")
-                #    pass
                 if user.type == 1:
                     return redirect(url_for('main.user_doctor', user=user))
                 elif user.type == 3:
