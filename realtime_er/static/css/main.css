@@ -22,6 +22,7 @@
     color: #B22222;
 }
 
+
 .liStyle li {
     display:inline-block;
     font-size:25px;
@@ -119,19 +120,35 @@ section {
     margin-right: auto;
     content: 'Salveaza';
 }
+
 label[for="salveaza"] {
     display: none;
 }
 label[for="transfera"] {
     display: none;
 }
+.buttonTransfer {
+    float:right;
+    margin-bottom: 3%;
+    width: 60%
+}
 label[for="register"] {
     display: none;
+}
+.anchorRegister {
+    color:white;
+    text-align:center;
+    float:right;
+    width: 60%;
+    margin-top: 3%;
 }
 label[for="forgot_password"] {
     display: none;
 }
 label[for="intra_in_cont"] {
+    display: none;
+}
+label[for="search"] {
     display: none;
 }
 .saveIcon {
@@ -140,4 +157,3 @@ label[for="intra_in_cont"] {
     padding-left: 5px;
     padding-right: 5px;
 }
-

@@ -70,6 +70,9 @@ def load_user(user_id):
 def ambulance_home():
     return render_template('ambulanceHome.html')
 
+@main.route('mobileHome', methods=["GET", "POST"])
+def mobile_home():
+    return render_template('mobileHome.html')
 
 @main.route('ambulanceChangePass', methods=["GET", "POST"])
 def ambulance_change_pass():
@@ -122,8 +125,7 @@ def autentificare():
     print 'here'
     if form.forgot_password.data:
         print 'here2'
-        recuperare_cont_form = RecuperareContForm()
-        return render_template('recuperare_cont.html', form=recuperare_cont_form)
+        return redirect(url_for("main.recuperare_cont"))
     print 'here3'
     if form.validate_on_submit():
         print 'here4'
@@ -143,15 +145,12 @@ def autentificare():
                     flash("AMBULANCE")
                     return redirect(url_for('main.ambulance_home'))
                     pass
-                elif user.patient == 0:
+                elif user.type == 0:
                     flash("PATIENT")
-                    pass
+                    return redirect(url_for('main.mobile_home'))
                 flash("Autentifcare reusita pentru utilizatorul: {}.".format(user.username))
             else:
                 flash("Date incorecte")
-        # elif form.forgot_password.data:
-        #     recuperare_cont_form = RecuperareContForm()
-        #     return render_template('recuperare_cont.html', form=recuperare_cont_form)
     return render_template('autentificare.html', form=form)
 
 
@@ -165,3 +164,8 @@ def deconectare():
 def user_doctor():
     user = User.get_by_username(current_user.username)
     return render_template("user_doctor.html", user=user)
+
+@main.route("recuperare_cont")
+def recuperare_cont():
+    recuperare_cont_form = RecuperareContForm()
+    return render_template("recuperare_cont.html", form=recuperare_cont_form)
