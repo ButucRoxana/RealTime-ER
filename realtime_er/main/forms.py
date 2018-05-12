@@ -25,7 +25,7 @@ class AutentificareForm(Form):
 class RecuperareContForm(Form):
     telefon = StringField('Telefon')
     email = StringField('E-mail ',validators=[DataRequired(), Length(1, 120), Email()])
-    trimite_cont = SubmitField("Timite cont")
+    trimite_cod = SubmitField('Timite cod ')
 
 
 class AmbulanceForgotPassForm(Form):

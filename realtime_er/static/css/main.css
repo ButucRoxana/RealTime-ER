@@ -84,6 +84,14 @@ section {
     border-radius: 5px;
     color: white;
 }
+.trimite_cod{
+    display: inline;
+    background-color: #B22222;
+    border-style: solid;
+    border-color: #B22222;
+    border-radius: 5px;
+    color: white;
+}
 
 /*Ambulance classes*/
 .iconStyleTablet {
@@ -149,6 +157,9 @@ label[for="intra_in_cont"] {
     display: none;
 }
 label[for="search"] {
+    display: none;
+}
+label[for="trimite_cod"] {
     display: none;
 }
 .saveIcon {
