@@ -43,3 +43,10 @@ class AmbulancePacients(Form):
     pacient = StringField('', validators=[DataRequired()])
     search = SubmitField('Cauta pacient')
     transfera = SubmitField('Transfera pacienti')
+
+
+class SchimbaParola(Form):
+    parola_veche = PasswordField("Parola veche", validators=[DataRequired()])
+    parola_noua = PasswordField("Parola noua", validators=[DataRequired()])
+    reintroduceti_parola = PasswordField("Reintroduceti parola", validators=[DataRequired()])
+    salveaza = SubmitField('Salveaza ')

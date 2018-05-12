@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% from "form_macros.html" import render_field %}
+
+{% block title %}
+Autentificare
+{%  endblock %}
+
+{% block content %}
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('main.index') }}"><i class="fa fa-home iconStyle"></i>Pagina principala</a>
+            </li>
+        </ul>
+
+      </div>
+    </nav>
+    <div class="row">
+        <div class="col-md-6 col-xs-6">
+            <h1 style="color:#B22222"><i class="fa fa-heartbeat" style="color:#B22222;padding: 8px;margin: 7px;"></i>RealTime-ER</h1>
+        </div>
+    </div>
+    <div class="row" style="margin:30px">
+        <h1 style="color:#1E90FF; font-weight: bold; font-size: 40px">Schimba parola</h1>
+    </div>
+    <div class="row">
+
+    </div>
+    <div class="row">
+        <div class="col-md-7 col-xs-7">
+            <section>
+                <form action="" method="post">
+                    {{form.hidden_tag()}}
+                    <table>
+                        {{ render_field(form.parola_veche, size=50) }}
+                        {{ render_field(form.parola_noua, size=50) }}
+                        {{ render_field(form.reintroduceti_parola, size=50) }}
+                        {{ render_field(form.salveaza, class="salveaza") }}
+                    </table>
+                </form>
+            </section>
+        </div>
+        <div class="col-md-2 col-xs-2"></div>
+        <div class="col-md-3 col-xs-3" style="float:right">
+
+        </div>
+    </div>
+
+    <div class="for messages">
+        <div class="main wrapper clearfix">
+            <article class="flashes">
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    <ul>
+                    {% for message in messages %}
+                      <li>{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                  {% endif %}
+                {% endwith %}
+            </article>
+
+            {%  block content_flash %}
+            {%  endblock %}
+
+        </div> <!-- #main -->
+    </div> <!-- #main-container -->
+
+    <div class="row" style="margin:20px">
+        <div class="col-md-2 col-xs-2"></div>
+        <div class="col-md-8 col-xs-8"></div>
+        <div class="col-md-2 col-xs-2">
+            <i class="fa fa-ambulance iconStyle" style="color:#B22222;padding: 8px;margin: 7px;"></i><u style="color:#1E90FF; font-weight: bold; font-size: 20px">021 9298</u>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}render_field
