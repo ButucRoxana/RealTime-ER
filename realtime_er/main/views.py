@@ -70,6 +70,17 @@ def load_user(user_id):
 def ambulance_home():
     return render_template('ambulanceHome.html')
 
+
+@main.route('inregistrarepacient', methods=["GET", "POST"])
+def inregistrare_pacient():
+    return render_template('inregistrarePacient.html')
+
+
+@main.route('er', methods=["GET", "POST"])
+def erHome():
+    return render_template('erHome.html', user=current_user)
+
+
 @main.route('mobileHome', methods=["GET", "POST"])
 def mobile_home():
     return render_template('mobileHome.html')
@@ -140,6 +151,7 @@ def autentificare():
                     return redirect(url_for('main.user_doctor', user=user))
                 elif user.type == 3:
                     flash("ER")
+                    return redirect(url_for('main.erHome'))
                     pass
                 elif user.type == 2:
                     flash("AMBULANCE")

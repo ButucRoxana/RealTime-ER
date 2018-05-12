@@ -16,7 +16,7 @@ Inregistrare Pacient
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('main.index') }}"><i class="fa fa-home iconStyle"></i>Pagina principala</a>
+                <a class="nav-link" href="{{ url_for('main.erHome') }}"><i class="fa fa-home iconStyle"></i>Pagina principala</a>
             </li>
         </ul>
 
@@ -28,7 +28,7 @@ Inregistrare Pacient
         </div>
     </div>
     <div class="row" style="margin:30px">
-        <h1 style="color:#1E90FF; font-weight: bold; font-size: 40px">Contact</h1>
+        <h1 style="color:#1E90FF; font-weight: bold; font-size: 40px">Inregistreaza pacient</h1>
     </div>
     <div class="row">
         <div class="col-md-7 col-xs-7">
@@ -38,16 +38,16 @@ Inregistrare Pacient
     <div class="row">
         <div class="col-md-7 col-xs-7">
             <section>
-                <form action="" method="post">
-                    {{form.hidden_tag()}}
-                    <table>
-                        {{ render_field(form.nume, size=50) }}
-                        {{ render_field(form.email, size=50) }}
-                        {{ render_field(form.subiect, size=50) }}
-                        {{ render_field(form.mesaj, rows='3',cols='50') }}
-                        {{ render_field(form.trimite) }}
-                    </table>
-                </form>
+{#                <form action="" method="post">#}
+{#                    {{form.hidden_tag()}}#}
+{#                    <table>#}
+{#                        {{ render_field(form.nume, size=50) }}#}
+{#                        {{ render_field(form.email, size=50) }}#}
+{#                        {{ render_field(form.subiect, size=50) }}#}
+{#                        {{ render_field(form.mesaj, rows='3',cols='50') }}#}
+{#                        {{ render_field(form.trimite) }}#}
+{#                    </table>#}
+{#                </form>#}
             </section>
         </div>
         <div class="col-md-2 col-xs-2"></div>
