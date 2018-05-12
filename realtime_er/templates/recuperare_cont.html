@@ -65,6 +65,26 @@ Autentificare
         </div>
     </div>
 
+     <div class="for messages">
+        <div class="main wrapper clearfix">
+            <article class="flashes">
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    <ul>
+                    {% for message in messages %}
+                      <li>{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                  {% endif %}
+                {% endwith %}
+            </article>
+
+            {%  block content_flash %}
+            {%  endblock %}
+
+        </div> <!-- #main -->
+    </div> <!-- #main-container -->
+
     <div class="row" style="margin:20px">
         <div class="col-md-2 col-xs-2"></div>
         <div class="col-md-8 col-xs-8"></div>
