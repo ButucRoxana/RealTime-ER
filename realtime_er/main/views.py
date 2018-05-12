@@ -7,7 +7,8 @@ from realtime_er.models import User, Patient, PatientFile, Hospital, Code, Ambul
 from realtime_er import db
 from datetime import datetime
 from .forms import AutentificareForm, RecuperareContForm
-from .forms import ContactForm, AmbulanceForgotPassForm, AmbulancePacients, AmbulanceRegisterPacient, SchimbaParola, PatientFileForm
+from .forms import ContactForm, AmbulanceForgotPassForm, AmbulancePacients, AmbulanceRegisterPacient, SchimbaParola, \
+    PatientFileForm
 
 
 @main.route('/')
@@ -73,18 +74,53 @@ def ambulance_home():
 
 @main.route('inregistrarepacient', methods=["GET", "POST"])
 def inregistrare_pacient():
-    return render_template('inregistrarePacient.html')
+    form = PatientFileForm()
+    print 'HOLAAA'
+    if form.validate_on_submit():
+        print 'SUCCCESSSSSSSSSSS'
+        existingPatient = Patient.query.filter_by(cnp=form.cnp.data).first()
+        if existingPatient is None:
+            user = User(username=form.cnp.data,
+                        first_name=form.nume.data,
+                        last_name='',
+                        email=form.email.data,
+                        birthday= datetime(1985, 3, 27),
+                        gender=form.sex.data,
+                        type=0,
+                        phone=form.telefon.data,
+                        password='test')
+            db.session.add(user)
+            db.session.commit()
+            userid = User.query.filter_by(username=form.cnp.data).first().user_id
+            patient = Patient(user_id=userid,
+                              cnp=form.cnp.data)
+            db.session.add(patient)
+            db.session.commit()
+            codeid = Code.query.filter_by(color=form.cod_urgenta.data).first().code_id
+            patientid = Patient.query.filter_by(cnp=form.cnp.data).first().patient_id
+            patientFile = PatientFile(patient_id=patientid,
+                                      code_id=codeid,
+                                      hospital_id=1,
+                                      attached_unit=1,
+                                      status=0,
+                                      treatment=form.tratament.data,
+                                      observations=form.observatii.data
+                                      )
+            db.session.add(patientFile)
+            db.session.commit()
+        return redirect(url_for('main.erHome'))
+    return render_template('inregistrarePacient.html', form=form)
 
 
 @main.route('er', methods=["GET", "POST"])
 def erHome():
-    form = PatientFileForm()
-    return render_template('erHome.html', user=current_user, form=form)
+    return render_template('erHome.html', user=current_user)
 
 
 @main.route('mobileHome', methods=["GET", "POST"])
 def mobile_home():
     return render_template('mobileHome.html')
+
 
 @main.route('ambulanceChangePass', methods=["GET", "POST"])
 def ambulance_change_pass():

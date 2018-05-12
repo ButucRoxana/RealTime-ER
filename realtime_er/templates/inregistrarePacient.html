@@ -30,69 +30,82 @@ Inregistrare Pacient
     <div class="row" style="margin:30px">
         <h1 style="color:#1E90FF; font-weight: bold; font-size: 40px">Inregistreaza pacient</h1>
     </div>
-    <div class="row">
-        <div class="col-md-7 col-xs-7">
-            <p style="text-indent: 50px;text-align: justify;color:#1E90FF; font-weight:bold">Ne bucuram sa va raspundem la intrebarile pe care le aveti. Trimiteti un mesaj prin completarea formularului de mai jos si va vom raspunde in cel mai scurt timp posibil.</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-7 col-xs-7">
-            <section>
-                 nume = StringField('Nume ', validators=[DataRequired()])
-    datanasterii = DateTimeField('Data nasterii ', validators=[DataRequired()])
-    cnp = StringField('CNP ', validators=[DataRequired()])
-    adresa = StringField('Adresa ',  validators=[Length(max=200)])
-    telefon = StringField('Telefon ', validators=[Length(max=10)])
-    email = StringField('Email ',  validators=[DataRequired(), Length(1, 120), Email()])
-    genders = [(x, x) for x in ["Feminin", "Masculin"]]
-    sex = RadioField('Sex', choices=genders)
-    coduri = ["Rosu", "Galben", "Verde", 'Albastru', "Alb"]
-    cod_urgenta = SelectField('Cod urgenta ', choices=coduri, validators=[DataRequired()])
-    observatii = TextAreaField('Observatii ',  validators=[Length(max=500)])
-    tratament = TextAreaField('Tratament ',  validators=[Length(max=500)])
-    adauga = SubmitField('Adauga ')
-                <form action="" method="post">
-                    {{form.hidden_tag()}}
-                    <table>
-                        {{ render_field(form.nume, size=50) }}
-                        {{ render_field(form.datanasterii, size=50) }}
-                        {{ render_field(form.cnp, size=50) }}
-                        {{ render_field(form.adresa, size=50) }}
-                        {{ render_field(form.telefon, size=50) }}
-                        {{ render_field(form.email, size=50) }}
-                        {{ render_field(form.sex) }}
-                    </table>
-                    <table>
-                        {{ render_field(form.cod_urgenta, size=50) }}
-                        {{ render_field(form.observatii, rows='3',cols='50') }}
-                        {{ render_field(form.tratamemt, rows='3',cols='50') }}
-                        {{ render_field(form.adauga) }}
-                    </table>
-                </form>
-            </section>
-        </div>
-        <div class="col-md-2 col-xs-2"></div>
-        <div class="col-md-3 col-xs-3" style="float:right">
-            <table>
-                <tbody>
-                    <tr>
-                        <td style="color:#1E90FF; font-weight:bold;">Email <br> <span style="color: black;text-decoration: underline; font-weight:bold">realtime-er@gmail.com </span><br><br></td>
-                    </tr>
-                    <tr>
-                        <td style="color:#1E90FF; font-weight:bold;">Telefon <br> <span style="color: black;text-decoration: underline; font-weight:bold">0756854123 </span><br><br> </td>
-                    </tr>
-                    <tr>
-                        <td style="color:#1E90FF; font-weight:bold;">Web <br>
-                            <i class="fa fa-facebook-f" style="color:#4682B4;padding: 8px;margin: 7px;"> </i>
-                            <i class="fa fa-instagram" style="color:#FF8C00;padding: 8px;margin: 7px;"> </i>
-                            <i class="fa fa-twitter" style="color:#1E90FF;padding: 8px;margin: 7px;"> </i>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-
+        <section>
+            <form action="" method="post">
+                {{form.hidden_tag()}}
+                <div class="row">
+                    <div class="col-md-6 col-xs-6">
+                        <div class="row" style="margin-bottom:10px">
+                            <div class="col-md-4 col-xs-4">
+                                <span style="color:#1E90FF; margin-right:10px">{{ form.nume.label }}</span>
+                            </div>
+                            <div class="col-md-8 col-xs-8">
+                                {{ form.nume(size="30") }}
+                            </div>
+                        </div>
+                         <div class="row" style="margin-bottom:10px">
+                            <div class="col-md-4 col-xs-4">
+                                <span style="color:#1E90FF; margin-right:10px">{{ form.datanasterii.label }}</span>
+                            </div>
+                            <div class="col-md-8 col-xs-8">
+                                {{ form.datanasterii(size="30") }}
+                            </div>
+                        </div>
+                         <div class="row" style="margin-bottom:10px">
+                            <div class="col-md-4 col-xs-4">
+                                <span style="color:#1E90FF; margin-right:10px">{{ form.cnp.label }}</span>
+                            </div>
+                            <div class="col-md-8 col-xs-8">
+                                {{ form.cnp(size="30") }}
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:10px">
+                            <div class="col-md-4 col-xs-4">
+                                <span style="color:#1E90FF; margin-right:10px">{{ form.adresa.label }}<i class="fa fa-map-marker iconStyle" style="border:none;color:#1E90FF"></i></span>
+                            </div>
+                            <div class="col-md-8 col-xs-8">
+                                {{ form.adresa(size="30") }}
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:10px">
+                            <div class="col-md-4 col-xs-4">
+                                <span style="color:#1E90FF; margin-right:10px">{{ form.telefon.label }}<i class="fa fa-phone iconStyle" style="border:none;color:#1E90FF"></i></span>
+                            </div>
+                            <div class="col-md-8 col-xs-8">
+                                {{ form.telefon(size="30") }}
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:10px">
+                            <div class="col-md-4 col-xs-4">
+                                <span style="color:#1E90FF; margin-right:10px">{{ form.email.label }}<i class="fa fa-envelope iconStyle" style="border:none;color:#1E90FF"></i></span>
+                            </div>
+                            <div class="col-md-8 col-xs-8">
+                                {{ form.email(size="30") }}
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:10px">
+                            <div class="col-md-4 col-xs-4">
+                                <span style="color:#1E90FF; margin-right:10px">{{ form.sex.label }}</span>
+                            </div>
+                            <div class="col-md-8 col-xs-8">
+                                {{ form.sex }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-7">
+                        <div>
+                            <span style="color:#1E90FF">{{ form.cod_urgenta.label }}</span>
+                            {{ form.cod_urgenta }}
+                        </div>
+                        <table>
+                            {{ render_field(form.observatii, rows='3',cols='50') }}
+                            {{ render_field(form.tratament, rows='3',cols='50') }}
+                        </table>
+                        <div>{{ form.adauga }}</div>
+                     </div>
+                 </div>
+            </form>
+        </section>
     </div>
 </div>
 {% endblock %}

@@ -15,15 +15,14 @@ class ContactForm(Form):
 
 class PatientFileForm(Form):
     nume = StringField('Nume ', validators=[DataRequired()])
-    datanasterii = DateTimeField('Data nasterii ', validators=[DataRequired()])
+    datanasterii = StringField('Data nasterii ', validators=[DataRequired()])
     cnp = StringField('CNP ', validators=[DataRequired()])
     adresa = StringField('Adresa ',  validators=[Length(max=200)])
     telefon = StringField('Telefon ', validators=[Length(max=10)])
     email = StringField('Email ',  validators=[DataRequired(), Length(1, 120), Email()])
-    genders = [(x, x) for x in ["Feminin", "Masculin"]]
-    sex = RadioField('Sex', choices=genders)
-    coduri = ["Rosu", "Galben", "Verde", 'Albastru', "Alb"]
-    cod_urgenta = SelectField('Cod urgenta ', choices=coduri, validators=[DataRequired()])
+    sex = RadioField('Sex', choices=[('0', 'Feminin'), ('1', 'Masculin')])
+    cod_urgenta = SelectField('Cod urgenta ', choices=[('0', 'Rosu'), ('1', 'Galben'), ('2', 'Verde'),
+                                                       ('3', 'Albastru'), ('4', 'Alb')], validators=[DataRequired()])
     observatii = TextAreaField('Observatii ',  validators=[Length(max=500)])
     tratament = TextAreaField('Tratament ',  validators=[Length(max=500)])
     adauga = SubmitField('Adauga ')
