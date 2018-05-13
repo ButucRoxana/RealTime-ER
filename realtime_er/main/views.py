@@ -158,6 +158,13 @@ def detaliipacient(file_id):
     user = User.query.filter_by(user_id=patient.user_id).first()
     p = PatFile(user.last_name + ' ' + user.first_name, user.birthday, patient.cnp, "Str. Fizicienilor", user.phone, user.email, user.gender, color, patient_file.observations, patient_file.treatment)
     form = PatientFileForm(obj=p)
+    if form.validate_on_submit():
+        patient_file.observations = form.observatii.data
+        patient_file.treatment = form.tratament.data
+        codeid = Code.query.filter_by(color=form.cod_urgenta.data).first().code_id
+        patient_file.code_id = codeid
+        db.session.commit()
+        return redirect(url_for('main.erHome'))
     return render_template('detaliipacient.html', form=form)
 
 
