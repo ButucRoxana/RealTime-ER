@@ -106,8 +106,28 @@ Inregistrare Pacient
                  </div>
             </form>
         </section>
-    </div>
+
+     <div class="for messages">
+        <div class="main wrapper clearfix">
+            <article class="flashes">
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    <ul>
+                    {% for message in messages %}
+                      <li>{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                  {% endif %}
+                {% endwith %}
+            </article>
+
+            {%  block content_flash %}
+            {%  endblock %}
+
+        </div> <!-- #main -->
+    </div> <!-- #main-container -->
 </div>
+
 {% endblock %}
 
 {% block sidebar %}

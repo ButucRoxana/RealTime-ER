@@ -128,7 +128,11 @@ def inregistrare_pacient():
                                       )
             db.session.add(patientFile)
             db.session.commit()
+        else:
+            flash("Pacientul este deja inregisrat!")
         return redirect(url_for('main.erHome'))
+    else:
+        flash("Date invalide!")
     return render_template('inregistrarePacient.html', form=form)
 
 
