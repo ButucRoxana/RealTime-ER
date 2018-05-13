@@ -11,6 +11,14 @@ from .forms import ContactForm, AmbulanceForgotPassForm, AmbulancePacients, Ambu
     PatientFileForm
 
 
+class Pats(object):
+    def __init__(self, name="Unknown name", file_id=0, patient_id=0, color=0):
+        self.name = name
+        self.file_id = file_id
+        self.patiemt_id = patient_id
+        self.color = color
+
+
 @main.route('/')
 def index():
     # db.session.add(User(username='ambulance',
@@ -75,9 +83,7 @@ def ambulance_home():
 @main.route('inregistrarepacient', methods=["GET", "POST"])
 def inregistrare_pacient():
     form = PatientFileForm()
-    print 'HOLAAA'
     if form.validate_on_submit():
-        print 'SUCCCESSSSSSSSSSS'
         existingPatient = Patient.query.filter_by(cnp=form.cnp.data).first()
         if existingPatient is None:
             user = User(username=form.cnp.data,
@@ -114,7 +120,20 @@ def inregistrare_pacient():
 
 @main.route('er', methods=["GET", "POST"])
 def erHome():
-    return render_template('erHome.html', user=current_user)
+    patients = []
+    patient_files = PatientFile.query.filter_by(status=0,
+                                                attached_unit=1
+                                                )
+    for x in patient_files:
+        color = Code.query.filter_by(code_id=x.code_id).first().color
+        userid = Patient.query.filter_by(patient_id=x.patient_id).first().user_id
+        user = User.query.filter_by(user_id=userid).first()
+        name = user.last_name + ' ' + user.first_name
+        patient = Pats(name, x.file_id, x.patient_id, color)
+        patients.append(patient)
+    for y in patients:
+        print y.name + "-------------------"
+    return render_template('erHome.html', user=current_user, patients=patients)
 
 
 @main.route('mobileHome', methods=["GET", "POST"])
