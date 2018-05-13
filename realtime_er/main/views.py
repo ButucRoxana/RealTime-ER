@@ -15,8 +15,22 @@ class Pats(object):
     def __init__(self, name="Unknown name", file_id=0, patient_id=0, color=0):
         self.name = name
         self.file_id = file_id
-        self.patiemt_id = patient_id
+        self.patient_id = patient_id
         self.color = color
+
+
+class PatFile(object):
+    def __init__(self, nume, datanasterii, cnp, adresa, telefon, email, sex, cod_urgenta, observatii, tratament):
+        self.nume = nume
+        self.datanasterii = datanasterii
+        self.cnp = cnp
+        self.adresa = adresa
+        self.telefon = telefon
+        self.email = email
+        self.sex = sex
+        self.cod_urgenta = cod_urgenta
+        self.observatii = observatii
+        self.tratament = tratament
 
 
 @main.route('/')
@@ -134,6 +148,17 @@ def erHome():
     for y in patients:
         print y.name + "-------------------"
     return render_template('erHome.html', user=current_user, patients=patients)
+
+
+@main.route('detaliipacient/<int:file_id>', methods=["GET", "POST"])
+def detaliipacient(file_id):
+    patient_file = PatientFile.query.filter_by(file_id=file_id).first()
+    patient = Patient.query.filter_by(patient_id=patient_file.patient_id).first()
+    color = Code.query.filter_by(code_id=patient_file.code_id).first().color
+    user = User.query.filter_by(user_id=patient.user_id).first()
+    p = PatFile(user.last_name + ' ' + user.first_name, user.birthday, patient.cnp, "Str. Fizicienilor", user.phone, user.email, user.gender, color, patient_file.observations, patient_file.treatment)
+    form = PatientFileForm(obj=p)
+    return render_template('detaliipacient.html', form=form)
 
 
 @main.route('mobileHome', methods=["GET", "POST"])
