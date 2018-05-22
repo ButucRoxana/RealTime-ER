@@ -35,20 +35,60 @@ RealTime-ER
             <h1 style="color:#B22222"><i class="fa fa-heartbeat" style="color:#B22222;padding: 8px;margin: 7px;"></i>RealTime-ER</h1>
         </div>
     </div>
-    <div class="row" style="margin:30px">
-        <div class="col-md-2 col-xs-2"></div>
-        <div class="col-md-8 col-xs-8">
-            <ul class="liStyle">
-              <li><a href="{{ url_for('main.despre_noi') }}"> Despre Noi </a></li>
-              <li><a href="{{ url_for('main.spitale_partenere') }}"> Spitale partenere </a></li>
-              <li><a href="{{ url_for('main.medici') }}"> Medici </a></li>
-              <li><a href="{{ url_for('main.contact') }}"> Contact </a></li>
-            </ul>
-        </div>
-        <div class="col-md-2 col-xs-2"></div>
-    </div>
+    {% if patients.count > 0 %}
+        {% with patients=patients %}
+            <div class="row" style="margin:30px">
+            <table  class="table table-bordered table-hover table-striped">
+            <tr>
+                <th style="text-align: center;">Nume</th>
+                <th style="text-align: center;">Cod urgenta</th>
+                <th style="text-align: center;">Detalii pacient</th>
+                <th style="text-align: center;">Preluare pacient</th>
+                <th style="text-align: center;">Finalizare fisa</th>
+            </tr>
+            {% for patient in patients %}
+                <tr >
+                    <td style="text-align: center;">{{  patient.name  }} </td>
+                    {% if patient.color == 0 %}
+                        <td style="text-align: center;color:#DC143C">Rosu</td>
+                    {% endif %}
+                    {% if patient.color == 1 %}
+                        <td style="text-align: center;color:#FFD700">Galben</td>
+                    {% endif %}
+                    {% if patient.color == 2 %}
+                        <td style="text-align: center;color:#7FFF00">Verde</td>
+                    {% endif %}
+                    {% if patient.color == 3 %}
+                        <td style="text-align: center;color:#1E90FF">Albastru</td>
+                    {% endif %}
+                    {% if patient.color == 4 %}
+                        <td style="text-align: center;color:#F5F5DC">Alb</td>
+                    {% endif %}
+                    <td style="text-align: center;">
+                        <a href="{{ url_for('main.detaliipacient', file_id=patient.file_id) }}">
+                            <i class="fa fa-info-circle" style="color:#B22222;"></i>
+                        </a>
+                     </td>
+                    <td style="text-align: center;">
+                        <a href="{{ url_for('main.consulta', file_id=patient.file_id) }}">
+                            <i class="fa fa-stethoscope" style="color:#B22222;"></i>
+                        </a>
+                     </td>
+                    <td style="text-align: center;">
+                        <a href="{{ url_for('main.finalizeaza', file_id=patient.file_id) }}">
+                            <i class="fa fa-times-circle" style="color:#B22222;"></i>
+                        </a>
+                     </td>
+                </tr>
+            {% endfor %}
+        </table>
+            </div>
+        {% endwith %}
+    {% else %}
+        <h1>No patients have been added yet.</h1>
+    {% endif %}
     <div>
-        <img src="{{ url_for('static', filename='images/med.jpg') }}" style="width: 85%; height: 25em;">
+        <img src="{{ url_for('static', filename='images/med.jpg') }}" class="imageCenter" style=" object-fit: contain;opacity: 0.5;z-index: -1; position:absolute">
     </div>
     <div class="row" style="margin:20px">
         <div class="col-md-2 col-xs-2"></div>

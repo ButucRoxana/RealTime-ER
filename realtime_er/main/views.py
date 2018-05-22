@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for
 from flask_login import login_user, logout_user, current_user, login_required
-
+from datetime import datetime
 from . import main
 from .. import login_manager
 from realtime_er.models import User, Patient, PatientFile, Hospital, Code, Ambulance, Doctor, Er
@@ -172,6 +172,48 @@ def detaliipacient(file_id):
     return render_template('detaliipacient.html', form=form)
 
 
+@main.route('consulta/<int:file_id>', methods=["GET", "POST"])
+def consulta(file_id):
+    patient_file = PatientFile.query.filter_by(file_id=file_id).first()
+    patient_file.start_time = datetime.now()
+    db.session.commit()
+    patient = Patient.query.filter_by(patient_id=patient_file.patient_id).first()
+    color = Code.query.filter_by(code_id=patient_file.code_id).first().color
+    user = User.query.filter_by(user_id=patient.user_id).first()
+    p = PatFile(user.last_name + ' ' + user.first_name, user.birthday, patient.cnp, "Str. Fizicienilor", user.phone, user.email, user.gender, color, patient_file.observations, patient_file.treatment)
+    form = PatientFileForm(obj=p)
+    if form.validate_on_submit():
+        patient_file.observations = form.observatii.data
+        patient_file.treatment = form.tratament.data
+        codeid = Code.query.filter_by(color=form.cod_urgenta.data).first().code_id
+        patient_file.code_id = codeid
+        db.session.commit()
+        return redirect(url_for('main.user_doctor'))
+    return render_template('detaliipacient.html', form=form)
+
+
+@main.route('finalizeaza/<int:file_id>', methods=["GET", "POST"])
+def finalizeaza(file_id):
+    user = User.get_by_username(current_user.username)
+    patient_file = PatientFile.query.filter_by(file_id=file_id).first()
+    patient_file.end_time = datetime.now()
+    patient_file.status = 1
+    db.session.commit()
+    patients = []
+    patient_files = PatientFile.query.filter_by(status=0,
+                                                attached_unit=1
+                                                )
+    for x in patient_files:
+        color = Code.query.filter_by(code_id=x.code_id).first().color
+        userid = Patient.query.filter_by(patient_id=x.patient_id).first().user_id
+        user1 = User.query.filter_by(user_id=userid).first()
+        name = user1.last_name + ' ' + user1.first_name
+        patient = Pats(name, x.file_id, x.patient_id, color)
+        patients.append(patient)
+        return redirect(url_for('main.user_doctor'))
+    return render_template('doctorHome.html', user=user, patients=patients)
+
+
 @main.route('mobileHome', methods=["GET", "POST"])
 def mobile_home():
     return render_template('mobileHome.html')
@@ -267,7 +309,20 @@ def deconectare():
 @main.route("user_doctor", methods=["GET", "POST"])
 def user_doctor():
     user = User.get_by_username(current_user.username)
-    return render_template("doctorHome.html", user=user)
+    patients = []
+    patient_files = PatientFile.query.filter_by(status=0,
+                                                attached_unit=1
+                                                )
+    for x in patient_files:
+        color = Code.query.filter_by(code_id=x.code_id).first().color
+        userid = Patient.query.filter_by(patient_id=x.patient_id).first().user_id
+        user1 = User.query.filter_by(user_id=userid).first()
+        name = user1.last_name + ' ' + user1.first_name
+        patient = Pats(name, x.file_id, x.patient_id, color)
+        patients.append(patient)
+    for y in patients:
+        print y.name + "-------------------"
+    return render_template("doctorHome.html", user=user, patients=patients)
 
 @main.route("recuperare_cont", methods=["GET", "POST"])
 def recuperare_cont():
