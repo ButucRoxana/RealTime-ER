@@ -135,6 +135,60 @@ def inregistrare_pacient():
         flash("Date invalide!")
     return render_template('inregistrarePacient.html', form=form)
 
+@main.route('ambulanceRegisterPacient', methods=["GET", "POST"])
+def ambulance_register_pacient():
+    form = PatientFileForm()
+    print form.validate_on_submit()
+    if form.validate_on_submit():
+        existingPatient = Patient.query.filter_by(cnp=form.cnp.data).first()
+        if existingPatient is None:
+            user = User(username=form.cnp.data,
+                        first_name=form.nume.data,
+                        last_name='',
+                        email=form.email.data,
+                        birthday= datetime(1985, 3, 27),
+                        gender=form.sex.data,
+                        type=0,
+                        phone=form.telefon.data,
+                        password='test')
+            db.session.add(user)
+            db.session.commit()
+            userid = User.query.filter_by(username=form.cnp.data).first().user_id
+            patient = Patient(user_id=userid,
+                              cnp=form.cnp.data)
+            db.session.add(patient)
+            db.session.commit()
+            codeid = Code.query.filter_by(color=form.cod_urgenta.data).first().code_id
+            patientid = Patient.query.filter_by(cnp=form.cnp.data).first().patient_id
+            patientFile = PatientFile(patient_id=patientid,
+                                      code_id=codeid,
+                                      hospital_id=1,
+                                      attached_unit=0,
+                                      status=0,
+                                      treatment=form.tratament.data,
+                                      observations=form.observatii.data
+                                      )
+            db.session.add(patientFile)
+            db.session.commit()
+        else:
+            flash("Pacientul este deja inregisrat!")
+        return redirect(url_for('main.ambulance_patient_list'))
+    else:
+        flash("Date invalide!")
+    return render_template('ambulanceRegisterPacient.html', form=form)
+
+
+@main.route('ambulanceTransferPacients', methods=["GET", "POST"])
+def ambulance_transfer_patients():
+    patient_files = PatientFile.query.filter_by(status=0,
+                                                attached_unit=0
+                                                )
+    for x in patient_files:
+        x.attached_unit = 1
+
+    db.session.commit()
+    return redirect(url_for('main.ambulance_patient_list'))
+
 
 @main.route('er', methods=["GET", "POST"])
 def erHome():
@@ -189,6 +243,25 @@ def detaliipacientDoctor(file_id):
     return render_template('consulta.html', form=form)
 
 
+@main.route('ambulanceDetaliipacient/<int:file_id>', methods=["GET", "POST"])
+def ambulance_detaliipacient(file_id):
+    patient_file = PatientFile.query.filter_by(file_id=file_id).first()
+    patient = Patient.query.filter_by(patient_id=patient_file.patient_id).first()
+    color = Code.query.filter_by(code_id=patient_file.code_id).first().color
+    user = User.query.filter_by(user_id=patient.user_id).first()
+    p = PatFile(user.last_name + ' ' + user.first_name, user.birthday, patient.cnp, "Str. Fizicienilor", user.phone, user.email, user.gender, color, patient_file.observations, patient_file.treatment)
+    form = PatientFileForm(obj=p)
+    if form.validate_on_submit():
+        patient_file.observations = form.observatii.data
+        patient_file.treatment = form.tratament.data
+        codeid = Code.query.filter_by(color=form.cod_urgenta.data).first().code_id
+        patient_file.code_id = codeid
+        db.session.commit()
+        return redirect(url_for('main.ambulance_patient_list'))
+    return render_template('ambulanceDetailPacient.html', form=form)
+
+
+
 @main.route('consulta/<int:file_id>', methods=["GET", "POST"])
 def consulta(file_id):
     patient_file = PatientFile.query.filter_by(file_id=file_id).first()
@@ -231,6 +304,29 @@ def finalizeaza(file_id):
     return render_template('doctorHome.html', user=user, patients=patients)
 
 
+@main.route('ambulanceFinalizeaza/<int:file_id>', methods=["GET", "POST"])
+def ambulance_finalizeaza(file_id):
+    form = AmbulancePacients()
+    #user = User.get_by_username(current_user.username)
+    patient_file = PatientFile.query.filter_by(file_id=file_id).first()
+    patient_file.end_time = datetime.now()
+    patient_file.status = 1
+    db.session.commit()
+    patients = []
+    patient_files = PatientFile.query.filter_by(status=0,
+                                                attached_unit=0
+                                                )
+    for x in patient_files:
+        color = Code.query.filter_by(code_id=x.code_id).first().color
+        userid = Patient.query.filter_by(patient_id=x.patient_id).first().user_id
+        user1 = User.query.filter_by(user_id=userid).first()
+        name = user1.last_name + ' ' + user1.first_name
+        patient = Pats(name, x.file_id, x.patient_id, color)
+        patients.append(patient)
+        return redirect(url_for('main.ambulance_patient_list'))
+    return render_template('ambulancePatientList.html', form=form, user=current_user, patients=patients)
+
+
 @main.route('mobileHome', methods=["GET", "POST"])
 def mobile_home():
     return render_template('mobileHome.html')
@@ -263,15 +359,23 @@ def ambulance_change_pass():
 @main.route('ambulancePatientList', methods=["GET", "POST"])
 def ambulance_patient_list():
     form = AmbulancePacients()
-
-    return render_template('ambulancePatientList.html', form=form)
-
-
-@main.route('ambulanceRegisterPatient', methods=["GET", "POST"])
-def ambulance_register_patient():
-    form = AmbulanceRegisterPacient()
-    # this has to be replaced with the right page
-    return render_template('ambulanceHome.html', form=form)
+    print current_user
+    #user = User.query.filter_by(user_id=current_user.user_id).first()
+    patients = []
+    #change the unit to 0
+    patient_files = PatientFile.query.filter_by(status=0,
+                                                attached_unit=0
+                                                )
+    for x in patient_files:
+        color = Code.query.filter_by(code_id=x.code_id).first().color
+        userid = Patient.query.filter_by(patient_id=x.patient_id).first().user_id
+        user1 = User.query.filter_by(user_id=userid).first()
+        name = user1.last_name + ' ' + user1.first_name
+        patient = Pats(name, x.file_id, x.patient_id, color)
+        patients.append(patient)
+    for y in patients:
+        print y.name + "-------------------"
+    return render_template('ambulancePatientList.html', form=form, user=current_user, patients=patients)
 
 tipuri_cont = {
     "Medic": 1,

@@ -33,44 +33,91 @@ Home ambulance
         </div>
     </div>
 
-    <div class="row" style="position:relative; margin-bottom:10px;">
+    <div class="row" style="margin-bottom:10px;">
         <img src="{{ url_for('static', filename='images/med.jpg') }}" class="backImage imageCenter">
-        <form action="" method="post">
-            {{form.hidden_tag()}}
 
-            <div class="col-md-12 col-xs-12">
-                <div class="row">
-                    <div class="col-md-8 col-xs-8">
-                        <h3 style="color:#B22222; text-align:center">
+        <div class="col-md-12 col-xs-12">
+            <div class="row" style="margin:30px; width:100%">
+                <form action="" method="post" style="width:100%">
+                    {{form.hidden_tag()}}
+
+                        <h1 style="color:#B22222;text-align:center">
                             <i class="fa fa-notes-medical" style="color:#B22222;padding: 8px;margin: 7px;"></i>
                             Pacienti
-                        </h3>
-
-                        <table>
-                        {{ render_field(form.pacient, size=50) }}
-                        {{ render_field(form.search, class="buttonColor") }}
-                            </table>
-                    </div>
-                    <div class="col-md-4 col-xs-4">
-                        <table >
-                            {{ render_field(form.transfera, class="buttonColor") }}
-                        </table>
-
-                        <a class="buttonColor" style="color:white; width: 60%; text-align:center; margin-left:0" href="{{url_for('main.ambulance_home')}}">
-                            Inregistreaza pacient
-                        </a>
-
-                    </div>
+                        </h1>
+                    <!--
+                        <div style="display: flex">
+                            {{ render_field(form.pacient, size=50) }}
+                            {{ render_field(form.search, class="buttonColor") }}
+                        </div>-->
+                </form>
+            </div>
+            <div class="row" style="margin:30px; width:100%">
+                <div style="display:flex; width:100%">
+                    <!--{{ render_field(form.transfera, class="buttonColor") }}=-->
+                    <button type="button" class="buttonColor" style="color:white; text-align:center; margin:auto"
+                            onclick="window.location.href='{{ url_for('main.ambulance_register_pacient') }}'" >
+                        Inregistreaza pacient
+                    </button>
+                    <button type="button" class="buttonColor" style="color:white; text-align:center; margin:auto"
+                            onclick="window.location.href='{{ url_for('main.ambulance_transfer_patients') }}'" >
+                        Transfera pacienti
+                    </button>
                 </div>
             </div>
-        </form>
-    </div>
-
-    <div class="col-md-12 col-xs-12">
-        <div class="row">
-
         </div>
+
     </div>
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12">
+            {% if patients.count > 0 %}
+                {% with patients=patients %}
+                    <div class="row" style="margin:30px; margin-top:0">
+                        <table  class="table table-bordered table-hover table-striped" style="background-color:#f5dcdc">
+                            <tr>
+                                <th style="text-align: center;">Nume</th>
+                                <th style="text-align: center;">Cod urgenta</th>
+                                <th style="text-align: center;">Detalii pacient</th>
+                                <th style="text-align: center;">Finalizare fisa</th>
+                            </tr>
+                            {% for patient in patients %}
+                            <tr >
+                                <td style="text-align: center;">{{  patient.name  }} </td>
+                                {% if patient.color == 0 %}
+                                    <td style="text-align: center;color:#DC143C">Rosu</td>
+                                {% endif %}
+                                {% if patient.color == 1 %}
+                                    <td style="text-align: center;color:#FFD700">Galben</td>
+                                {% endif %}
+                                {% if patient.color == 2 %}
+                                    <td style="text-align: center;color:#7FFF00">Verde</td>
+                                {% endif %}
+                                {% if patient.color == 3 %}
+                                    <td style="text-align: center;color:#1E90FF">Albastru</td>
+                                {% endif %}
+                                {% if patient.color == 4 %}
+                                    <td style="text-align: center;color:#F5F5DC">Alb</td>
+                                {% endif %}
+                                <td style="text-align: center;">
+                                    <a href="{{ url_for('main.ambulance_detaliipacient', file_id=patient.file_id) }}">
+                                        <i class="fa fa-info-circle" style="color:#B22222;"></i>
+                                    </a>
+                                 </td>
+                                <td style="text-align: center;">
+                                    <a href="{{ url_for('main.ambulance_finalizeaza', file_id=patient.file_id) }}">
+                                        <i class="fa fa-times-circle" style="color:#B22222;"></i>
+                                    </a>
+                                 </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                {% endwith %}
+            {% else %}
+                <h1>No patients have been added yet.</h1>
+            {% endif %}
+        </div>
     </div>
 
     <div class="row" style="margin:20px">
@@ -83,8 +130,6 @@ Home ambulance
         <div class="col-md-4"></div>
     </div>
 
-
-    </div>
 </div>
 {% endblock %}
 

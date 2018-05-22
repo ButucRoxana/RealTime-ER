@@ -161,6 +161,9 @@ label[for="tip_cont"] {
 label[for="trimite_pt_aprobare"] {
     display: none;
 }
+label[for="adauga"] {
+    display: none;
+}
 .buttonTransfer {
     float:right;
     margin-bottom: 3%;
