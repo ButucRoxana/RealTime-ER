@@ -27,17 +27,21 @@ Inregistrare
             <h1 style="color:#B22222"><i class="fa fa-heartbeat" style="color:#B22222;padding: 8px;margin: 7px;"></i>RealTime-ER</h1>
         </div>
     </div>
-    <div class="row" style="margin:30px">
+
+    <div>
+        <section>
+             <form action="" method="post">
+                  <div class="row" style="margin:30px">
         <div class="col-md-6 col-xs-7">
             <h1 style="color:#1E90FF; font-weight: bold; font-size: 40px">Inregistrare</h1>
         </div>
         <div class="col-md-6 col-xs-7">
-           <form action="" method="post">
+{#           <form action="" method="post">#}
                     {{form.hidden_tag()}}
                     <table style="margin-top: 12px;">
                         {{ form.tip_cont }}
                     </table>
-                </form>
+{#                </form>#}
         </div>
     </div>
     <div class="row">
@@ -46,7 +50,7 @@ Inregistrare
     <div class="row">
         <div class="col-md-6 col-xs-7">
             <section>
-                <form action="" method="post">
+{#                <form action="" method="post">#}
                     {{form.hidden_tag()}}
                     <table>
                         <div class="col-md-4 col-xs-4">
@@ -58,12 +62,12 @@ Inregistrare
                             {{ form.data_nasterii(size="40")}}
                         </div>
                     </table>
-                </form>
+{#                </form>#}
             </section>
         </div>
         <div class="col-md-6 col-xs-2">
              <section>
-                <form action="" method="post">
+{#                <form action="" method="post">#}
                     {{form.hidden_tag()}}
                     <table>
                         <div class="col-md-4 col-xs-4">
@@ -76,7 +80,7 @@ Inregistrare
                         </div>
 
                     </table>
-                </form>
+{#                </form>#}
             </section>
         </div>
     </div>
@@ -84,7 +88,7 @@ Inregistrare
     <div class="row">
         <div class="col-md-6 col-xs-7">
             <section>
-                <form action="" method="post">
+{#                <form action="" method="post">#}
                     {{form.hidden_tag()}}
                     <table>
                          <div class="col-md-4 col-xs-4">
@@ -99,12 +103,12 @@ Inregistrare
                             {{ form.trimite_pt_aprobare(class="aprobare")}}
                         </div>
                     </table>
-                </form>
+{#                </form>#}
             </section>
         </div>
         <div class="col-md-6 col-xs-2">
              <section>
-                <form action="" method="post">
+{#                <form action="" method="post">#}
                     {{form.hidden_tag()}}
                     <table>
                         <div class="col-md-4 col-xs-4">
@@ -116,9 +120,13 @@ Inregistrare
                             {{ form.email(size="40")}}
                         </div>
                     </table>
-                </form>
+{#                </form>#}
             </section>
         </div>
+    </div>
+
+             </form>
+        </section>
     </div>
 
 
