@@ -66,3 +66,19 @@ class SchimbaParola(Form):
     parola_noua = PasswordField("Parola noua", validators=[DataRequired()])
     reintroduceti_parola = PasswordField("Reintroduceti parola", validators=[DataRequired()])
     salveaza = SubmitField('Salveaza ')
+
+
+class InregistrareDoctorER(Form):
+    tip_cont = SelectField("Tip cont: ", choices = [('Alege tip cont', 'Alege tip cont'), ('Medic', 'Medic'), ('ER', 'ER')])
+    nume = StringField('Nume ', validators=[DataRequired()])
+    prenume = StringField('Prenume ', validators=[DataRequired()])
+    data_nasterii = StringField('Data nasterii ', validators=[DataRequired()])
+    files = [(x, x) for x in ["Feminin", "Masculin"]]
+    sex = RadioField('Sex:', choices=files)
+    spital_partener = StringField('Spital Partener ', validators=[DataRequired()])
+    adresa = StringField('Adresa  ', validators=[DataRequired()])
+    nr_telefon = StringField('Nr. telefon ')
+    email = StringField('Email ',  validators=[DataRequired(), Length(1, 120), Email()])
+    trimite_pt_aprobare = SubmitField('Trimite pentru aprobare ')
+
+
