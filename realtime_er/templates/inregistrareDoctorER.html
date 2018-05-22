@@ -35,7 +35,7 @@ Inregistrare
            <form action="" method="post">
                     {{form.hidden_tag()}}
                     <table style="margin-top: 12px;">
-                        {{ render_field(form.tip_cont) }}
+                        {{ form.tip_cont }}
                     </table>
                 </form>
         </div>
@@ -49,8 +49,14 @@ Inregistrare
                 <form action="" method="post">
                     {{form.hidden_tag()}}
                     <table>
-                        {{ render_field(form.nume, size=40) }}
-                        {{ render_field(form.data_nasterii, size=40) }}
+                        <div class="col-md-4 col-xs-4">
+                                <span style="color:#1E90FF; margin-right:10px">{{ form.nume.label }}</span>
+                            {{ form.nume(size="40")}}
+                        </div>
+                        <div class="col-md-4 col-xs-4">
+                                <span style="color:#1E90FF; margin-right:10px">{{ form.data_nasterii.label }}</span>
+                            {{ form.data_nasterii(size="40")}}
+                        </div>
                     </table>
                 </form>
             </section>
@@ -60,8 +66,15 @@ Inregistrare
                 <form action="" method="post">
                     {{form.hidden_tag()}}
                     <table>
-                        {{ render_field(form.prenume, size=40) }}
-                        {{ render_field(form.sex, class="sex") }}
+                        <div class="col-md-4 col-xs-4">
+                                <span style="color:#1E90FF; margin-right:10px">{{ form.prenume.label }}</span>
+                            {{ form.prenume(size="40")}}
+                        </div>
+                        <div class="col-md-4 col-xs-4">
+                                <span style="color:#1E90FF; margin-right:10px">{{ form.sex.label }}</span>
+                            {{ form.sex}}
+                        </div>
+
                     </table>
                 </form>
             </section>
@@ -74,9 +87,17 @@ Inregistrare
                 <form action="" method="post">
                     {{form.hidden_tag()}}
                     <table>
-                        {{ render_field(form.spital_partener, size=40) }}
-                        {{ render_field(form.nr_telefon, size=40) }}
-                        {{ render_field(form.trimite_pt_aprobare, class="aprobare") }}
+                         <div class="col-md-4 col-xs-4">
+                                <span style="color:#1E90FF; margin-right:10px">{{ form.spital_partener.label }}</span>
+                            {{ form.spital_partener(size="40")}}
+                        </div>
+                        <div class="col-md-4 col-xs-4">
+                                <span style="color:#1E90FF; margin-right:10px">{{ form.nr_telefon.label }}</span>
+                            {{ form.nr_telefon(size="40")}}
+                        </div>
+                         <div class="col-md-4 col-xs-4">
+                            {{ form.trimite_pt_aprobare(class="aprobare")}}
+                        </div>
                     </table>
                 </form>
             </section>
@@ -86,8 +107,14 @@ Inregistrare
                 <form action="" method="post">
                     {{form.hidden_tag()}}
                     <table>
-                        {{ render_field(form.adresa, size=40) }}
-                        {{ render_field(form.email, size=40) }}
+                        <div class="col-md-4 col-xs-4">
+                                <span style="color:#1E90FF; margin-right:10px">{{ form.adresa.label }}</span>
+                            {{ form.adresa(size="40")}}
+                        </div>
+                        <div class="col-md-4 col-xs-4">
+                                <span style="color:#1E90FF; margin-right:10px">{{ form.email.label }}</span>
+                            {{ form.email(size="40")}}
+                        </div>
                     </table>
                 </form>
             </section>
