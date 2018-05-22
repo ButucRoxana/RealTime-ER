@@ -324,16 +324,46 @@ def inregistrareDoctorER():
     if form.validate_on_submit():
         nume = form.nume.data
         prenume = form.prenume.data
-        flash(nume)
-        tip_cont = form.tip_cont.data
-        print("!!!!!!!!!!!!!!!!")
-        print(tip_cont)
-        if form.tip_cont.data == "Medic":
+
+        data_nasterii = form.data_nasterii.data
+        sex = form.sex.data
+        spital_partener = form.spital_partener.data
+        adresa = form.adresa.data
+        nr_telefon = form.nr_telefon.data
+        email = form.email.data
+        flash(sex)
+        flash(form.tip_cont.data)
+
+        username = nume + prenume
+        flash(username)
+
+        # Medic: 1, ER: 2
+        if form.tip_cont.data == "1":
             flash("Medic")
-            pass
-        elif form.tip_cont.data == "ER":
+            type = 1
+        elif form.tip_cont.data == "2":
             flash("ER")
-            pass
+            type = 3
+        else:
+            flash("Alegeti un tip de cont")
+            return redirect(url_for('main.inregistrareDoctorER'))
+        existingUser = User.query.filter_by(username=username).first()
+        if existingUser is None:
+            user = User(username=username,
+                        first_name=nume,
+                        last_name='',
+                        email=email,
+                        birthday= datetime(1985, 3, 27),
+                        gender=sex,
+                        type=type,
+                        phone=nr_telefon,
+                        password='er')
+            db.session.add(user)
+            db.session.commit()
+            flash("Inregistrare reusita!")
+        else:
+            flash("User deja inregisrat!")
+        # return redirect(url_for('main.inregistrareDoctorER')) ?????????????
     return render_template("inregistrareDoctorER.html", form=form)
 
 
