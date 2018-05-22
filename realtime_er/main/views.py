@@ -171,6 +171,23 @@ def detaliipacient(file_id):
         return redirect(url_for('main.erHome'))
     return render_template('detaliipacient.html', form=form)
 
+@main.route('detaliipacientDoctor/<int:file_id>', methods=["GET", "POST"])
+def detaliipacientDoctor(file_id):
+    patient_file = PatientFile.query.filter_by(file_id=file_id).first()
+    patient = Patient.query.filter_by(patient_id=patient_file.patient_id).first()
+    color = Code.query.filter_by(code_id=patient_file.code_id).first().color
+    user = User.query.filter_by(user_id=patient.user_id).first()
+    p = PatFile(user.last_name + ' ' + user.first_name, user.birthday, patient.cnp, "Str. Fizicienilor", user.phone, user.email, user.gender, color, patient_file.observations, patient_file.treatment)
+    form = PatientFileForm(obj=p)
+    if form.validate_on_submit():
+        patient_file.observations = form.observatii.data
+        patient_file.treatment = form.tratament.data
+        codeid = Code.query.filter_by(color=form.cod_urgenta.data).first().code_id
+        patient_file.code_id = codeid
+        db.session.commit()
+        return redirect(url_for('main.user_doctor'))
+    return render_template('consulta.html', form=form)
+
 
 @main.route('consulta/<int:file_id>', methods=["GET", "POST"])
 def consulta(file_id):
@@ -189,7 +206,7 @@ def consulta(file_id):
         patient_file.code_id = codeid
         db.session.commit()
         return redirect(url_for('main.user_doctor'))
-    return render_template('detaliipacient.html', form=form)
+    return render_template('consulta.html', form=form)
 
 
 @main.route('finalizeaza/<int:file_id>', methods=["GET", "POST"])
