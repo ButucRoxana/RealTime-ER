@@ -8,7 +8,7 @@ from realtime_er import db
 from datetime import datetime
 from .forms import AutentificareForm, RecuperareContForm
 from .forms import ContactForm, AmbulanceForgotPassForm, AmbulancePacients, AmbulanceRegisterPacient, SchimbaParola, \
-    PatientFileForm
+    PatientFileForm, InregistrareDoctorER
 
 
 class Pats(object):
@@ -298,6 +298,13 @@ def autentificare():
             else:
                 flash("Date incorecte")
     return render_template('autentificare.html', form=form)
+
+
+
+@main.route("inregistrareDoctorER", methods=["GET", "POST"])
+def inregistrareDoctorER():
+    form = InregistrareDoctorER()
+    return render_template("inregistrareDoctorER.html", form=form)
 
 
 @main.route("deconectare")

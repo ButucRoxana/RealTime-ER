@@ -101,6 +101,18 @@ section {
     color: white;
 }
 
+.aprobare{
+    display: inline;
+    background-color: #B22222;
+    border-style: solid;
+    border-color: #B22222;
+    border-radius: 5px;
+    color: white;
+    height: 46px;
+    width: 280px;
+    margin-top: 37px;
+}
+
 /*Ambulance classes*/
 .iconStyleTablet {
     font-size:25px;
@@ -141,6 +153,12 @@ label[for="salveaza"] {
     display: none;
 }
 label[for="transfera"] {
+    display: none;
+}
+label[for="tip_cont"] {
+    display: none;
+}
+label[for="trimite_pt_aprobare"] {
     display: none;
 }
 .buttonTransfer {
