@@ -363,7 +363,7 @@ def inregistrareDoctorER():
             flash("Inregistrare reusita!")
         else:
             flash("User deja inregisrat!")
-        # return redirect(url_for('main.inregistrareDoctorER')) ?????????????
+        return redirect(url_for('main.inregistrareDoctorER')) #????????????????????????
     return render_template("inregistrareDoctorER.html", form=form)
 
 
