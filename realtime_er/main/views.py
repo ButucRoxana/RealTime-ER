@@ -304,15 +304,19 @@ def autentificare():
 @main.route("inregistrareDoctorER", methods=["GET", "POST"])
 def inregistrareDoctorER():
     form = InregistrareDoctorER()
-    tip_cont = form.tip_cont.data
-    print("!!!!!!!!!!!!!!!!")
-    print(tip_cont)
-    if form.tip_cont.data == "Medic":
-        flash("Medic")
-        pass
-    elif form.tip_cont.data == "ER":
-        flash("ER")
-        pass
+    if form.validate_on_submit():
+        nume = form.nume.data
+        prenume = form.prenume.data
+        flash(nume)
+        tip_cont = form.tip_cont.data
+        print("!!!!!!!!!!!!!!!!")
+        print(tip_cont)
+        if form.tip_cont.data == "Medic":
+            flash("Medic")
+            pass
+        elif form.tip_cont.data == "ER":
+            flash("ER")
+            pass
     return render_template("inregistrareDoctorER.html", form=form)
 
 

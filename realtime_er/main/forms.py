@@ -69,7 +69,7 @@ class SchimbaParola(Form):
 
 
 class InregistrareDoctorER(Form):
-    tip_cont = SelectField("Tip cont: ", choices = [('Alege tip cont', 'Alege tip cont'), ('Medic', 'Medic'), ('ER', 'ER')])
+    tip_cont = SelectField("Tip cont: ", choices = [('0', 'Alege tip cont'), ('1', 'Medic'), ('2', 'ER')])
     nume = StringField('Nume ', validators=[DataRequired()])
     prenume = StringField('Prenume ', validators=[DataRequired()])
     data_nasterii = StringField('Data nasterii ', validators=[DataRequired()])
@@ -77,7 +77,7 @@ class InregistrareDoctorER(Form):
     sex = RadioField('Sex:', choices=files)
     spital_partener = StringField('Spital Partener ', validators=[DataRequired()])
     adresa = StringField('Adresa  ', validators=[DataRequired()])
-    nr_telefon = StringField('Nr. telefon ')
+    nr_telefon = StringField('Nr. telefon ', validators=[DataRequired()])
     email = StringField('Email ',  validators=[DataRequired(), Length(1, 120), Email()])
     trimite_pt_aprobare = SubmitField('Trimite pentru aprobare ')
 
