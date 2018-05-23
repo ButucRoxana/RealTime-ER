@@ -8,7 +8,7 @@ from realtime_er import db
 from datetime import datetime
 from .forms import AutentificareForm, RecuperareContForm
 from .forms import ContactForm, AmbulanceForgotPassForm, AmbulancePacients, AmbulanceRegisterPacient, SchimbaParola, \
-    PatientFileForm, InregistrareDoctorER
+    PatientFileForm, InregistrareDoctorER, CerereUPU, MobileInregistrareForm, DatePersonaleForm
 
 
 class Pats(object):
@@ -18,6 +18,11 @@ class Pats(object):
         self.patient_id = patient_id
         self.color = color
 
+class Spital(object):
+    def __init__(self, nume=" ", timp=0, spital_id=0):
+        self.nume = nume
+        self.timp = timp
+        self.spital_id = spital_id
 
 class PatFile(object):
     def __init__(self, nume, datanasterii, cnp, adresa, telefon, email, sex, cod_urgenta, observatii, tratament):
@@ -331,6 +336,107 @@ def ambulance_finalizeaza(file_id):
 def mobile_home():
     return render_template('mobileHome.html')
 
+@main.route('mobileEstimari', methods=["GET", "POST"])
+def mobile_estimari():
+    spitale = []
+    hospitals = Hospital.query
+    for s in hospitals:
+        waiting_time = 0
+        fise = PatientFile.query.filter_by(hospital_id=s.hospital_id)
+        for f in fise:
+            waiting_time += Code.query.filter_by(code_id=f.code_id).first().waiting_time
+        spital = Spital(s.name, waiting_time, s.hospital_id)
+        spitale.append(spital)
+    print spitale
+    return render_template('mobileEstimari.html', spitale=spitale)
+
+@main.route('mobileCerereInregistrata', methods=["GET", "POST"])
+def mobile_cerere_inreg():
+    return render_template('mobileCerereInregistrata.html')
+
+@main.route('mobileCerereUPU', methods=["GET", "POST"])
+def mobile_login():
+    form = CerereUPU()
+    if form.validate_on_submit():
+        codeid = Code.query.filter_by(color=form.cod_urgenta.data).first().code_id
+        patientid = Patient.query.filter_by(user_id=current_user.user_id).first().patient_id
+        files = PatientFile.query
+        for f in files:
+            if f.patient_id == patientid:
+                f.code_id = codeid
+                f.observations += 'Update de la pacient: ' + form.simptome.data + '; '
+                db.session.commit()
+                return redirect(url_for('main.mobile_estimari'))
+        patientFile = PatientFile(patient_id=patientid,
+                                  code_id=codeid,
+                                  hospital_id=1,
+                                  attached_unit=1,
+                                  status=0,
+                                  treatment='Pending',
+                                  observations='Simptome declarate de pacient: ' + form.simptome.data + '; ')
+        db.session.add(patientFile)
+        db.session.commit()
+        return redirect(url_for('main.mobile_estimari'))
+    else:
+        flash("Date invalide!")
+    return render_template('mobileCerereUPU.html', form=form)
+
+
+@main.route("mobileSchimbaParola", methods=["GET", "POST"])
+def mob_schimba_parola():
+    form = SchimbaParola()
+    if form.validate_on_submit():
+        if form.salveaza.data:
+            # Find user - it's current_user
+            user = User.query.filter_by(user_id=current_user.user_id).first()
+            if User.check_password(user, form.parola_veche.data):
+                print 'OK'
+                if form.parola_noua.data == form.reintroduceti_parola.data:
+                    # Set the new password
+                    user.password = form.parola_noua.data
+                    db.session.commit()
+                    # Redirect to the login page for the user to login with the new password
+                    logout_user()
+                    return redirect(url_for('main.autentificare'))
+                else:
+                    flash("Parola reintrodusa nu coincide cu cea de mai sus!")
+            else:
+                flash("Ati introdus parola veche gresit!")
+    return render_template("mobileSchimbaParola.html", form=form)
+
+@main.route('mobileDatePersonale', methods=["GET", "POST"])
+def mobile_date_pers():
+    form = DatePersonaleForm()
+    return render_template('mobileDatePersonale.html', form=form)
+
+@main.route('mobileInregistrare', methods=["GET", "POST"])
+def mobile_inregistrare():
+    form = MobileInregistrareForm()
+    if form.validate_on_submit():
+        existingPatient = Patient.query.filter_by(cnp=form.cnp.data).first()
+        if existingPatient is None:
+            user = User(username=form.cnp.data,
+                        first_name=form.nume.data,
+                        last_name='',
+                        email=form.email.data,
+                        birthday=datetime(1985, 3, 27),
+                        gender=form.sex.data,
+                        type=0,
+                        phone=form.telefon.data,
+                        password=form.parola.data)
+            db.session.add(user)
+            db.session.commit()
+            userid = User.query.filter_by(username=form.cnp.data).first().user_id
+            patient = Patient(user_id=userid,
+                              cnp=form.cnp.data)
+            db.session.add(patient)
+            db.session.commit()
+            return redirect(url_for('main.mobile_home'))
+        else:
+            flash("Aveti deja un cont inregisrat!")
+    else:
+        flash("Date invalide!")
+    return render_template('mobileInregistrare.html', form=form)
 
 @main.route('ambulanceChangePass', methods=["GET", "POST"])
 def ambulance_change_pass():
@@ -405,15 +511,12 @@ def autentificare():
                 if user.type == 1:
                     return redirect(url_for('main.user_doctor', user=user))
                 elif user.type == 3:
-                    flash("ER")
                     return redirect(url_for('main.erHome'))
                     pass
                 elif user.type == 2:
-                    flash("AMBULANCE")
                     return redirect(url_for('main.ambulance_home'))
                     pass
                 elif user.type == 0:
-                    flash("PATIENT")
                     return redirect(url_for('main.mobile_home'))
                 flash("Autentifcare reusita pentru utilizatorul: {}.".format(user.username))
             else:

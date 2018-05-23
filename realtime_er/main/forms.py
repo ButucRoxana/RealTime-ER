@@ -27,6 +27,33 @@ class PatientFileForm(Form):
     tratament = TextAreaField('Tratament ',  validators=[Length(max=500)])
     adauga = SubmitField('Adauga ')
 
+class MobileInregistrareForm(Form):
+    nume = StringField('Nume ', validators=[DataRequired()])
+    datanasterii = StringField('Data nasterii ', validators=[DataRequired()])
+    cnp = StringField('CNP ', validators=[DataRequired()])
+    adresa = StringField('Adresa ',  validators=[Length(max=200)])
+    telefon = StringField('Telefon ', validators=[Length(max=10)])
+    email = StringField('Email ',  validators=[DataRequired(), Length(1, 120), Email()])
+    sex = RadioField('Sex', choices=[('0', 'Feminin'), ('1', 'Masculin')])
+    parola = PasswordField('Parola', validators=[DataRequired()])
+    creaza = SubmitField(' Creaza cont ')
+
+class DatePersonaleForm(Form):
+    nume = StringField('Nume ', validators=[DataRequired()])
+    datanasterii = StringField('Data nasterii ', validators=[DataRequired()])
+    cnp = StringField('CNP ', validators=[DataRequired()])
+    adresa = StringField('Adresa ',  validators=[Length(max=200)])
+    telefon = StringField('Telefon ', validators=[Length(max=10)])
+    email = StringField('Email ',  validators=[DataRequired(), Length(1, 120), Email()])
+    sex = RadioField('Sex', choices=[('0', 'Feminin'), ('1', 'Masculin')])
+    modifica = SubmitField(' Modifica ')
+
+class CerereUPU(Form):
+    cod_urgenta = SelectField('Cod urgenta ', choices=[('0', 'Rosu'), ('1', 'Galben'), ('2', 'Verde'),
+                                                       ('3', 'Albastru'), ('4', 'Alb')], validators=[DataRequired()])
+    simptome = TextAreaField('Simptome ',  validators=[Length(max=500)])
+    verifica = SubmitField('Verifica ')
+
 
 class AutentificareForm(Form):
     nume = StringField('Nume ', validators=[DataRequired()])
@@ -50,6 +77,11 @@ class AmbulanceForgotPassForm(Form):
     repeatNewPassword = StringField('Repeat New Password ', validators=[DataRequired()])
     salveaza = SubmitField('Salveaza')
 
+class SchimbaParola(Form):
+    parola_veche = PasswordField("Parola veche", validators=[DataRequired()])
+    parola_noua = PasswordField("Parola noua", validators=[DataRequired()])
+    reintroduceti_parola = PasswordField("Reintroduceti parola", validators=[DataRequired()])
+    salveaza = SubmitField('Salveaza ')
 
 class AmbulanceRegisterPacient(Form):
     register = SubmitField('Inregistreaza pacient')
@@ -59,14 +91,6 @@ class AmbulancePacients(Form):
     pacient = StringField('', validators=[DataRequired()])
     search = SubmitField('Cauta pacient')
     transfera = SubmitField('Transfera pacienti')
-
-
-class SchimbaParola(Form):
-    parola_veche = PasswordField("Parola veche", validators=[DataRequired()])
-    parola_noua = PasswordField("Parola noua", validators=[DataRequired()])
-    reintroduceti_parola = PasswordField("Reintroduceti parola", validators=[DataRequired()])
-    salveaza = SubmitField('Salveaza ')
-
 
 class InregistrareDoctorER(Form):
     tip_cont = SelectField("Tip cont: ", choices = [('0', 'Alege tip cont'), ('1', 'Medic'), ('2', 'ER')])

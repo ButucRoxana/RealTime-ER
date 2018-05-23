@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% from "form_macros.html" import render_field %}
+
+{% block title %}
+RealTime-ER
+{%  endblock %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/mobile.css') }}">
+{%  endblock %}
+
+{% block content %}
+
+<div class="wrapper">
+    <div class="iphone">
+        <div class="power"></div>
+        <div class="lock"></div>
+        <div class="volume up"></div>
+        <div class="volume down"></div>
+        <div class="camera"></div>
+        <div class="speaker"></div>
+        <div class="screen">
+            <nav class="navbar navbar-collapsed navbar-light bg-light">
+                <style>
+            #background {
+              width: 100%;
+              position: fixed;
+              z-index: -99;
+              bottom: 0;
+              left: 0;
+            }
+
+            #background img {
+              width: 100%;
+              height: auto;
+            }
+
+            .navbar-brand,
+            .navbar i,
+            .navbar .icon-bar {
+              color: red !important;
+            }
+
+
+                </style>
+                <a class="navbar-brand" href="#">RealTime-ER</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active"><a class="nav-link" href="{{ url_for('main.mobile_home') }}"><i
+                                class="fa fa-home" aria-hidden="true"></i></i> &nbsp;Home</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="#"><i class="fa fa-plus"
+                                                                                    aria-hidden="true"></i></i> &nbsp;Cerere
+                            UPU</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="{{ url_for('main.mobile_date_pers') }}"><i
+                                class="fa fa-user-circle-o" aria-hidden="true"></i> &nbsp;Date personale</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="{{ url_for('main.mob_schimba_parola') }}"><i
+                                class="fa fa-lock" aria-hidden="true"></i> &nbsp;Schimbare parola</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="{{ url_for('main.autentificare') }}"><i
+                                class="fa fa-power-off" aria-hidden="true"></i> &nbsp;Deconectare</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                        <br/><h5 style="color:#1E90FF; font-weight: bold;">Cerere UPU</h5><br/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-7 col-xs-7">
+                        <section>
+                            <form action="" method="post">
+                                {{form.hidden_tag()}}
+                                <div class="row" style="margin-bottom:10px">
+                                    <div class="col-md-8 col-xs-8">
+                                        <span style="color:#1E90FF">{{ form.cod_urgenta.label }}</span>
+                                    </div>
+                                    <div class="col-md-4 col-xs-4">
+                                        {{ form.cod_urgenta }}
+                                    </div>
+                                </div>
+                                <table>
+                                    {{ render_field(form.simptome, rows='3',cols='38') }}
+                                </table>
+                                <div>{{ form.verifica(class="btn btn-primary") }}</div>
+
+                            </form>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="button">
+            <div class="square"></div>
+        </div>
+    </div>
+</div>
+
+{{ moment.include_jquery() }}
+{{ moment.include_moment() }}
+{%  endblock %}

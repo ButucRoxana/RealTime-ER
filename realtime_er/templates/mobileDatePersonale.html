@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% from "form_macros.html" import render_field %}
+
+{% block title %}
+RealTime-ER
+{%  endblock %}
+
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile.css') }}">
+{%  endblock %}
+
+{% block content %}
+
+  <div class="wrapper">
+    <div class="iphone">
+      <div class="power"></div>
+      <div class="lock"></div>
+      <div class="volume up"></div>
+      <div class="volume down"></div>
+      <div class="camera"></div>
+      <div class="speaker"></div>
+      <div class="screen">
+        <nav class="navbar navbar-collapsed navbar-light bg-light">
+          <style>
+            #background {
+              width: 100%;
+              position: fixed;
+              z-index: -99;
+              bottom: 0;
+              left: 0;
+            }
+
+            #background img {
+              width: 100%;
+              height: auto;
+            }
+
+            .navbar-brand,
+            .navbar i,
+            .navbar .icon-bar {
+              color: red !important;
+            }
+          </style>
+          <a class="navbar-brand" href="#">RealTime-ER</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active"><a class="nav-link" href="{{ url_for('main.mobile_home') }}"><i class="fa fa-home" aria-hidden="true"></i></i> &nbsp;Home</a></li>
+              <li class="nav-item active"><a class="nav-link" href="{{ url_for('main.mobile_login') }}"><i class="fa fa-plus" aria-hidden="true"></i></i> &nbsp;Cerere UPU</a></li>
+              <li class="nav-item active"><a class="nav-link" href="#"><i class="fa fa-user-circle-o" aria-hidden="true"></i> &nbsp;Date personale</a></li>
+              <li class="nav-item active"><a class="nav-link" href="{{ url_for('main.mob_schimba_parola') }}"><i class="fa fa-lock" aria-hidden="true"></i> &nbsp;Schimbare parola</a></li>
+              <li class="nav-item active"><a class="nav-link" href="{{ url_for('main.autentificare') }}"><i class="fa fa-power-off" aria-hidden="true"></i> &nbsp;Deconectare</a></li>
+            </ul>
+      </div>
+      </nav>
+
+          <div class="container-fluid">
+          <div class="row">
+              <div class="col-sm">
+        <br/><h5 style="color:#1E90FF; font-weight: bold;">Date personale</h5><br/>
+              </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <form action="" method="post">
+                {{form.hidden_tag()}}
+                <div class="row" style="margin-bottom:10px">
+                            <div class="col-md-2 col-xs-2">
+                                <span style="color:#1E90FF; margin-right:10px">{{ form.nume.label }}</span>
+                            </div>
+                            <div class="col-md-10 col-xs-10">
+                                {{ form.nume(size="30",value='Ion Popescu') }}
+                            </div>
+                        </div>
+                <div class="row" style="margin-bottom:10px">
+                            <div class="col-md-2 col-xs-2">
+                                <span style="color:#1E90FF; margin-right:10px">{{ form.datanasterii.label }}</span>
+                            </div>
+                            <div class="col-md-10 col-xs-10">
+                                {{ form.datanasterii(size="30", value='20.04.1990') }}
+                            </div>
+                        </div>
+
+                         <div class="row" style="margin-bottom:10px">
+                            <div class="col-md-2 col-xs-2">
+                                <span style="color:#1E90FF; margin-right:10px">{{ form.cnp.label }}</span>
+                            </div>
+                            <div class="col-md-10 col-xs-10">
+                                {{ form.cnp(size="30", value='2940420212283') }}
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:10px">
+                            <div class="col-md-2 col-xs-2">
+                                <span style="color:#1E90FF; margin-right:10px"><i class="fa fa-map-marker iconStyle" style="border:none;color:#1E90FF"></i></span>
+                            </div>
+                            <div class="col-md-10 col-xs-10">
+                                {{ form.adresa(size="30",value='Strada Viitor nr. 3') }}
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:10px">
+                            <div class="col-md-2 col-xs-2">
+                                <span style="color:#1E90FF; margin-right:10px"><i class="fa fa-phone iconStyle" style="border:none;color:#1E90FF"></i></span>
+                            </div>
+                            <div class="col-md-10 col-xs-10">
+                                {{ form.telefon(size="30", value='0759 055 438') }}
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:10px">
+                            <div class="col-md-2 col-xs-2">
+                                <span style="color:#1E90FF; margin-right:10px"><i class="fa fa-envelope iconStyle" style="border:none;color:#1E90FF"></i></span>
+                            </div>
+                            <div class="col-md-8 col-xs-8">
+                                {{ form.email(size="30", value='ion.popescu@mail.com') }}
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:10px">
+                            <div class="col-md-2 col-xs-2">
+                                <span style="color:#1E90FF; margin-right:10px">{{ form.sex.label }}</span>
+                            </div>
+                            <div class="col-md-8 col-xs-8 custom-form-inline">
+                                {{ form.sex(class="form-check-inline") }}
+                            </div>
+                        </div>
+                        <div>{{ form.modifica(class="btn btn-primary") }}</div>
+                </form>
+                    </div>
+                 </div>
+        </div>
+     </div>
+    <div class="button">
+      <div class="square"></div>
+    </div>
+
+  </div>
+  </div>
+
+{{ moment.include_jquery() }}
+{{ moment.include_moment() }}
+{%  endblock %}
